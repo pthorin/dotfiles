@@ -7,5 +7,10 @@ ssh-add /home/pt/.ssh/production.pem &
 ssh-add /home/pt/.ssh/test.pem &
 ssh-add /home/pt/.ssh/filetransfer.pem &
 setxkbmap -option caps:escape &
+numlockx &
+xmodmap ~/.Xmodmap &
 slack &
-/home/pt/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox &
+run_keybase &
+signal &
+/home/pt/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox --minimize &
+deadd-notification-center &

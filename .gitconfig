@@ -29,6 +29,7 @@
   copy-hash = "!git log -n1 --format='%H' |xclip -in -selection clipboard"
   changes-to-master = "diff --name-only master"
   praise = "blame"
+  prco = "!hub pr checkout"
 
 [push]
 	default = current

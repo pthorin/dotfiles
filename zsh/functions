@@ -2,6 +2,14 @@ hub_clone_speedledger () {
   # clone $1 (repo) to $2 (custom name) or default to repo name
   hub clone speedledger/$1 ${2-$1}
 }
+wtfpipeoutput () {
+  # TLDR on stdout / stderr
+  cat << EOF
+    command &> out          # for both going to out, works in bash and zsh
+    command >out 2>&1       # for both going to out
+    command > out 2>error   # std out to out, stderr to error
+EOF
+}
 wtfrebase () {
   # TLDR on rebase
   cat << EOF
@@ -74,9 +82,15 @@ tmuxcheatsheet() {
   # TLDR on tmux
   cat << EOF
     "change new pane directory: <prefix>+: attach -c CWD"
+    "attach new session: tmux new-session -s new -t 0"
 EOF
 }
 alias wtftmux='tmuxcheatsheet'
+
+restartwifi() {
+  nmcli radio wifi off
+  nmcli radio wifi on
+}
 
 ### vim
 vimfind(){
