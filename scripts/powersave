@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+echo 'GOVERNOR="powersave"' | sudo tee /etc/default/cpufrequtils
+sudo service cpufrequtils restart
