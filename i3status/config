@@ -14,12 +14,13 @@ general {
   color_degraded = "#FFC300"
 }
 
+order += cpu_usage
 #order += "ipv6"
 #order += "disk /"
-order += "ethernet _first_"
 order += "battery 0"
 order += "wireless _first_"
 #order += "load"
+order += "ethernet _first_"
 order += "tztime local"
 
 wireless _first_ {
@@ -39,9 +40,9 @@ battery 0 {
     status_chr = "⚡"
     status_bat = "🔋"
     status_unk = "?"
-    status_full = "☻"
+    status_full = "🦄"
     path = "/sys/class/power_supply/BAT%d/uevent"
-    low_threshold = 10
+    low_threshold = 15
 }
 
 
@@ -55,4 +56,12 @@ load {
 
 disk "/" {
         format = "%avail"
+}
+
+cpu_usage {
+  format = "💻 %usage"
+  max_threshold = 75
+  degraded_threshold = 50
+  format_above_threshold = "🔥 %usage"
+  format_above_degraded_threshold = "🥵  %usage"
 }

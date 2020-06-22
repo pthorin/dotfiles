@@ -104,5 +104,26 @@ plainvim() {
 browsh() {
   docker run --rm -it -v $HOME/.config/browsh/config.toml:/app/.config/browsh/config.toml browsh/browsh
 }
+dryconflict() {
+  git merge-tree $(git merge-base $2 $1) $2 $1 | ag '^\<+ \.our$'
+}
 
+showmethecolors() {
+  for i in {0..255}; do
+    printf "\x1b[38;5;${i}mcolour${i}\x1b[0m\n"
+  done
+}
 
+wtfcreatedatabase() {
+cat << EOF
+  CREATE DATABASE $1;
+  CREATE USER $1 WITH ENCRYPTED PASSWORD '$1';
+  GRANT ALL PRIVILEGES ON DATABASE $1 TO $1;
+EOF
+}
+
+nvm() {
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+  nvm $*
+}

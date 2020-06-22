@@ -30,13 +30,19 @@
   changes-to-master = "diff --name-only master"
   praise = "blame"
   prco = "!hub pr checkout"
+  prlist = "!hub pr list --color=always"
+  prl = "pr list --color=always"
+  dry = "!f() { git merge-tree $(git merge-base $2 $1) $2 $1; }; f"
+  dryconflict = "dryconflict"
+  documentation = "!f() { git show $(git blame $1 -L $2,$2 |awk '{print $1}') }; f"
+  renametomain = "!f() { git fetch --all ; git remote set-head origin -a ; git branch --set-upstream-to origin/main ; git branch -m master main ; }; f"
 
 [push]
 	default = current
 [pull]
 	rebase = true
-[url "git@github.com:"]
-	insteadOf = https://github.com/
+; [url "git@github.com:"]
+; 	insteadOf = https://github.com/
 [hooks "confirm"]
 	match = TODO
 	match = HACK

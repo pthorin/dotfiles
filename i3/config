@@ -170,7 +170,16 @@ bindsym --whole-window button2 exec --no-startup-id import /tmp/latest-screensho
 # finds out, if available)
 bar {
   position top
-  tray_output primary
+  tray_output DP-1-1-8
+  tray_output DP-2-1-8
+  tray_output DP-1-1
+  tray_output DP-1
+  tray_output DP-2
+  tray_output DP-1-1-1
+  tray_output eDP-1
+
+  #tray_padding 0
+
   status_command i3status
   colors {
     background #000000
@@ -202,6 +211,10 @@ new_float normal
 
 # Lock screen
 bindsym Ctrl+Mod1+l exec --no-startup-id /home/pt/scripts/fuzz
+# reset screen
+bindsym $mod+F8 exec --no-startup-id /home/pt/scripts/resetscreen
+# show notification center
+bindsym $mod+F10 exec --no-startup-id kill -s USR1 $(pidof deadd-notification-center)
 
 bindsym $mod+Shift+m move workspace to output left
 bindsym $mod+m move workspace to output right
@@ -209,9 +222,10 @@ bindsym $mod+Ctrl+m move workspace to output up
 bindsym $mod+Shift+Ctrl+m move workspace to output down
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
+bindsym F1 exec --no-startup-id /home/pt/scripts/mute-mic.sh
 
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec --no-startup-id brightness-up # increase screen brightness
@@ -232,7 +246,7 @@ exec --no-startup-id workrave
 # Make the currently focused window a scratchpad
 bindsym $mod+Shift+minus move scratchpad
 for_window [title="^Spotify"] mark "music", move scratchpad
-for_window [title="^Slack"] move scratchpad
+#for_window [title="^Slack"] move scratchpad
 for_window [title="^Signal"] move scratchpad
 for_window [title="^Keybase"] move scratchpad
 for_window [title="^Riot"] move scratchpad

@@ -39,6 +39,8 @@ alias reloadzshrc='source ~/.zshrc'
 # less is more
 alias less='less -N -i -J'
 alias more='less'
+# dmesg 
+alias dmesg_errors='dmesg -l err,warn'
 # docker stuff
 alias gitmoji="docker run --rm -it gitmoji-cli"
 # hello
@@ -56,3 +58,9 @@ alias apt='sudo apt'
 # doing
 alias later='doing show later'
 alias reading='doing show reading'
+alias whatwasidoing='vim ~/what_was_i_doing.md'
+#codacy
+alias codacy='codacy-analysis-cli analyse --tool codacy-scalameta-pro'
+alias sstyle='scalastyle -c /home/pt/repos/dotfiles/scalastyle_config.xml'
+alias remark='remark -r ~/repos/remark/.remarkrc'
+alias renametomain="git fetch --all && git remote set-head origin -a && git branch --set-upstream-to origin/main && git branch -m master main" 
