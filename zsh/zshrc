@@ -92,7 +92,7 @@ PROMPT=$PROMPT'$(kube_ps1) '
 export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 export PATH=$PATH:~/scripts
 export PATH=$PATH:~/go/bin
-export PATH=$PATH:~/.gem/ruby/2.5.0/bin
+export PATH=$PATH:~/.gem/ruby/2.7.0/bin
 export PATH=$PATH:./node_modules/.bin
 export PATH=$PATH:~/repos/docker-bin
 
