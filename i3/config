@@ -164,7 +164,6 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
-bindsym --whole-window button2 exec --no-startup-id import /tmp/latest-screenshot.png
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -250,11 +249,14 @@ for_window [title="^Spotify"] mark "music", move scratchpad
 for_window [title="^Signal"] move scratchpad
 for_window [title="^Keybase"] move scratchpad
 for_window [title="^Riot"] move scratchpad
+for_window [title="^Element"] move scratchpad
+for_window [title=".*Discord$"] move scratchpad
 bindsym $mod+comma [con_mark="music"] scratchpad show
 bindsym $mod+period [title="^Slack"] scratchpad show
 bindsym $mod+i [title="^Signal"] scratchpad show
+bindsym $mod+o [title=".*Discord$"] scratchpad show
 bindsym $mod+b [title="^Keybase"] scratchpad show
-bindsym $mod+Shift+comma [title="^Riot"] scratchpad show
+bindsym $mod+Shift+comma [title="^Element"] scratchpad show
 
 # Show the first scratchpad window
 bindsym $mod+minus scratchpad show
@@ -265,3 +267,7 @@ bindsym Mod1+Shift+Tab focus left
 
 exec_always --no-startup-id /home/pt/scripts/i3_autostart_always
 exec --no-startup-id /home/pt/scripts/i3_autostart
+
+bindsym $mod+F5 exec --no-startup-id killall -SIGUSR1 dunst # Pause
+bindsym $mod+Shift+F5 exec --no-startup-id killall -SIGUSR2 dunst # Resume
+
