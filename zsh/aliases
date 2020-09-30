@@ -64,3 +64,5 @@ alias codacy='codacy-analysis-cli analyse --tool codacy-scalameta-pro'
 alias sstyle='scalastyle -c /home/pt/repos/dotfiles/scalastyle_config.xml'
 alias remark='remark -r ~/repos/remark/.remarkrc'
 alias renametomain="git fetch --all && git remote set-head origin -a && git branch --set-upstream-to origin/main && git branch -m master main" 
+# cal
+alias cal='ncal -b -M -w'
