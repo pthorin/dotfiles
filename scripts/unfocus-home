@@ -1,1 +1,3 @@
+#!/bin/bash
 xrandr --output eDP-1 --auto --right-of DP-1-1-8
+"$HOME/.fehbg"
