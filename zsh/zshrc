@@ -166,6 +166,13 @@ function stern() {
   stern $*
 }
 
+# gh complete
+if [[ ! -d "$ZSH/completions" || ! -f "$ZSH/completions/_gh" ]]; then
+    mkdir -pv $ZSH/completions
+    gh completion --shell zsh > $ZSH/completions/_gh
+    echo "gh added completions: gh completion --shell zsh > $ZSH/completions/_gh"
+fi
+
 unsetopt auto_cd
 # run profiler
 #zprof
