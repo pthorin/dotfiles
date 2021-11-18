@@ -1,13 +1,15 @@
 [user]
   name = Peter Thorin
-	email = peter.thorin@speedledger.se
+	email = peter.thorin@visma.com
   editor = vim
 [alias]
+  praise = blame
   ls = log --graph --decorate --format=short --all
+  lminimal = log --graph --decorate --pretty=oneline --all
   lsg = log --graph --decorate --all
   lsp = log --graph --decorate --format=short --all -p
   last = log -1
-  st = status --short
+  st = status --short --branch
   co = checkout
   ec = config --global -e
   up = !git pull --rebase --prune $@
@@ -22,13 +24,12 @@
   bclean = "!f() { git checkout ${1-master} && git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs git branch -d; }; f"
   bdone = "!f() { git checkout ${2-master} && git up && git bclean ${1-master}; }; f"
   # rebdone = "!f() { git checkout master && git up && git checkout $1 && git rebase master && if [ $(git need-rebase) -eq 1 ]; then git rebase master ; fi && git bdone }; f"
-  clean-branches ="!f() { git checkout master && git up && git branch --list |grep -v " master$" | xargs git branch -d; }; f"
+  clean-branches ="!f() { git checkout main && git up && git branch --list |grep -v " main$" | xargs git branch -d; }; f"
   list = branch --list
   list-merged = branch --merged
   need-rebase = "!f() { current=$(git rev-parse --abbrev-ref HEAD); hash1=$(git show-ref --heads -s master); hash2=$(git merge-base ${current} master); PAGER='' git diff --shortstat ${hash1} ${hash2}; test "${hash1}" = "${hash2}" && echo "Nah, we good." && exit 0 || echo "Rebase is required"; exit 1; }; f"
   copy-hash = "!git log -n1 --format='%H' |xclip -in -selection clipboard"
   changes-to-master = "diff --name-only master"
-  praise = "blame"
   prco = "!hub pr checkout"
   prlist = "!hub pr list --color=always"
   prl = "pr list --color=always"
@@ -52,3 +53,10 @@
 	verbose = true
 [init]
 	defaultBranch = main
+[core]
+	autocrlf = input
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
