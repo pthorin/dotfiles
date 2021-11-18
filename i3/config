@@ -52,7 +52,8 @@ bindsym $mod+Shift+q kill
 #bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 #bindsym $mod+d exec --no-startup-id rofi -combi-modi window#drun#ssh
 #bindsym $mod+d exec --no-startup-id "rofi -show window,drun,ssh -font \\"DejaVu 9\\" -run-shell-command '{terminal} -e \\" {cmd}; read -n 1 -s\\"'"
-bindsym $mod+d exec --no-startup-id "rofi -modi combi -show combi -combi-modi window,drun,ssh,run"
+bindsym $mod+d exec --no-startup-id "rofi -modi combi -show combi -combi-modi window#drun#ssh#run"
+bindsym $mod+shift+d exec --no-startup-id "rofi -modi run -show run"
 
 
 # change focus
@@ -212,13 +213,11 @@ new_float normal
 bindsym Ctrl+Mod1+l exec --no-startup-id /home/pt/scripts/fuzz
 # reset screen
 bindsym $mod+F8 exec --no-startup-id /home/pt/scripts/resetscreen
-# show notification center
-bindsym $mod+F10 exec --no-startup-id kill -s USR1 $(pidof deadd-notification-center)
 
-bindsym $mod+Shift+m move workspace to output left
-bindsym $mod+m move workspace to output right
-bindsym $mod+Ctrl+m move workspace to output up
-bindsym $mod+Shift+Ctrl+m move workspace to output down
+bindsym $mod+Ctrl+m move workspace to output down
+bindsym $mod+Ctrl+Shift+m move workspace to output up
+bindsym $mod+Shift+m move workspace to output right
+bindsym $mod+m move workspace to output left
 
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
@@ -239,25 +238,24 @@ bindsym --release Print exec --no-startup-id /home/pt/scripts/import-to-clipboar
 bindsym --release Shift+Print exec --no-startup-id /home/pt/scripts/import-to-file
 
 exec xmodmap /home/pt/.xmodmaprc
-exec --no-startup-id workrave
 
 # Scratchpad
 # Make the currently focused window a scratchpad
 bindsym $mod+Shift+minus move scratchpad
-for_window [title="^Spotify"] mark "music", move scratchpad
+for_window [title="^Spotify"] mark "music" #, move scratchpad
 #for_window [title="^Slack"] move scratchpad
-for_window [title="^Signal"] move scratchpad
-for_window [title="^Keybase"] move scratchpad
-for_window [title="^Riot"] move scratchpad
-for_window [title="^Element"] move scratchpad
-for_window [title=".*Discord$"] move scratchpad
+#for_window [title="^Signal"] move scratchpad
+#for_window [title="^Riot"] move scratchpad
+#for_window [title="^Element"] move scratchpad
+#for_window [title=".*Discord$"] move scratchpad
 bindsym $mod+comma [con_mark="music"] scratchpad show
 bindsym $mod+period [title="^Slack"] scratchpad show
 bindsym $mod+i [title="^Signal"] scratchpad show
 bindsym $mod+o [title=".*Discord$"] scratchpad show
-bindsym $mod+b [title="^Keybase"] scratchpad show
 bindsym $mod+Shift+comma [title="^Element"] scratchpad show
 
+for_window [title="^JetBrains Toolbox"] floating enable
+#for_window [title="emote"] floating enable
 # Show the first scratchpad window
 bindsym $mod+minus scratchpad show
 
@@ -271,3 +269,5 @@ exec --no-startup-id /home/pt/scripts/i3_autostart
 bindsym $mod+F5 exec --no-startup-id killall -SIGUSR1 dunst # Pause
 bindsym $mod+Shift+F5 exec --no-startup-id killall -SIGUSR2 dunst # Resume
 
+bindsym $mod+u exec --no-startup-id gnome-pomodoro --start
+bindsym $mod+Shift+u exec --no-startup-id gnome-pomodoro --pause-resume
