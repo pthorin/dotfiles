@@ -9,10 +9,3 @@ xmodmap ~/.Xmodmap &
 slack &
 signal-desktop &
 dunst &
-#deadd-notification-center &
-# stretchly &
-#run_keybase &
-# /home/pt/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox --minimize &
-#ssh-add /home/pt/.ssh/production.pem &
-#ssh-add /home/pt/.ssh/test.pem &
-#ssh-add /home/pt/.ssh/filetransfer.pem &
