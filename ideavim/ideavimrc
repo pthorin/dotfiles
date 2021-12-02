@@ -50,6 +50,7 @@ nnoremap <leader>gt :action GotoTest<CR>
 nnoremap <leader>tn :action RunClass<CR>
 nnoremap <leader>tl :action Rerun<CR>
 nnoremap <leader>tf :action RerunFailedTests<CR>
+nnoremap <leader>tc :action RunContextGroup<CR><CR>
 
 " Undo
 nnoremap <leader>uh :action LocalHistory.ShowHistory<CR>
@@ -70,3 +71,11 @@ noremap <leader>y "+y
 noremap <leader>Y "+Y
 noremap <leader>p "+p
 noremap <leader>P "+P
+
+" delete without yanking
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
+
+" replace currently selected text with default register
+" without yanking it
+vnoremap <leader>p "_dP"
