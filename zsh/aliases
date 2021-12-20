@@ -19,16 +19,19 @@ alias gc='git commit --interactive -m '
 alias gcane='git commit --amend --no-edit'
 alias gco='git checkout'
 alias gcob='git cob'
-alias hubsl='hub_clone_speedledger'
+alias ghclone='gh_clone_speedledger'
 alias lg='lazygit'
 # kubectl
-alias kc='kubectl'
-alias kca='kubectl apply -f'
-alias kcp='kubectl get pods'
-alias kcu='kubectl config use-context'
-alias kec='kubectl config view --minify=true --flatten --context'
-alias vkcp='watch -n 1 kubectl get pods'
-alias agenda='date ; gcalcli --calendar SpeedLedger --calendar Gemensam agenda'
+alias kc='kubecolor'
+alias kca='kubecolor apply -f'
+alias kcp='kubecolor get pods'
+alias kcu='kubecolor config use-context'
+kns() {
+  kubecolor config set-context --current --namespace="$1"
+}
+alias kec='kubecolor config view --minify=true --flatten --context'
+alias vkcp='watch -n 1 kubecolor get pods'
+alias agenda='date ; gcalcli --calendar SpeedLedger --calendar Gemensam agenda $(date -I) $(date -I --date tomorrow) --details end --military'
 
 alias cw='circle watch'
 alias i3config='vim ~/.config/i3/config'
@@ -37,17 +40,17 @@ alias editfunctions='vim ~/repos/dotfiles/zsh/functions'
 
 alias reloadzshrc='source ~/.zshrc'
 # less is more
-alias less='less -N -i -J'
+# alias less='less -N -i -J'
 alias more='less'
 # dmesg 
 alias dmesg_errors='dmesg -l err,warn'
 # docker stuff
 alias gitmoji="docker run --rm -it gitmoji-cli"
 # hello
-alias say='espeak -v sv -s 200'
+# alias say='espeak -v sv -s 200'
 # gcalcli
 alias week='gcalcli --calendar Gemensam --calendar SpeedLedger calw 1'
-alias gitvim="vim -c 'Gstatus |wincmd o' ."
+alias gitvim="vim -c 'Git |wincmd o' ."
 # copy paste
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
@@ -62,7 +65,12 @@ alias whatwasidoing='vim ~/what_was_i_doing.md'
 #codacy
 alias codacy='codacy-analysis-cli analyse --tool codacy-scalameta-pro'
 alias sstyle='scalastyle -c /home/pt/repos/dotfiles/scalastyle_config.xml'
-alias remark='remark -r ~/repos/remark/.remarkrc'
+alias remarkwithdefaultrc='remark -r ~/repos/remark/.remarkrc'
 alias renametomain="git fetch --all && git remote set-head origin -a && git branch --set-upstream-to origin/main && git branch -m master main" 
 # cal
 alias cal='ncal -b -M -w'
+# awslogin
+alias awslogin='aws-vault exec -t `ykman oath accounts code -s Amazon` pt'
+alias avl='av login'
+alias ave='av exec'
+alias today='date --date today -I'

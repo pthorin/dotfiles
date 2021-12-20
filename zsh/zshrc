@@ -1,7 +1,7 @@
 # load profiler
 #zmodload zsh/zprof
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/go/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/pt/.oh-my-zsh"
@@ -71,14 +71,15 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
+
 plugins=(
-  git
-  kube-ps1
+  #git
+  #kube-ps1
   ssh-agent
   zsh-completions
   just)
 
-zstyle :omz:plugins:ssh-agent identities id_rsa test.pem production.pem
+zstyle :omz:plugins:ssh-agent identities id_rsa test.pem production.pem sfprod.pem
 
 source $ZSH/oh-my-zsh.sh
 autoload -U compinit && compinit
@@ -86,15 +87,17 @@ autoload -U compinit && compinit
 # User configuration
 export DEFAULT_USER=pt
 prompt_context(){}
-PROMPT=$PROMPT'$(kube_ps1) '
+#PROMPT=$PROMPT'$(kube_ps1) '
 #
 # Set some paths
-export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 export PATH=$PATH:~/scripts
 export PATH=$PATH:~/go/bin
 export PATH=$PATH:~/.gem/ruby/2.7.0/bin
+#export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/"
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH=$PATH:./node_modules/.bin
 export PATH=$PATH:~/repos/docker-bin
+export PATH=$PATH:~/Applications/kui
 
 if (( ! ${fpath[(I)/usr/local/share/zsh/site-functions]} )); then
   FPATH=/usr/local/share/zsh/site-functions:$FPATH
@@ -105,12 +108,21 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export EDITOR='vim'
+export PAGER='less -F'
 
-export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
-export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
-export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
-export MANPATH="/home/linuxbrew/.linuxbrew/share/man":$MANPATH
-export INFOPATH="/home/linuxbrew/.linuxbrew/share/info":$INFOPATH
+# starship.rs
+source <("starship" init zsh --print-full-init)
+
+# copied from zsh-completion
+#source /home/pt/repos/dotfiles/zsh/completion.zsh
+# end of copy
+#bindkey -M menuselect '^[[Z' reverse-menu-complete # shift-tab reverses autocomplete
+
+source <(kubecolor completion zsh |sed s/kubectl/kubecolor/g)
+
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+bindkey '^ ' autosuggest-accept
+bindkey '\e' autosuggest-clear
 
 
 # get all the zecrets!
@@ -134,22 +146,23 @@ export TTC_POMODORO=25
 export TTC_BREAK=10
 
 
-eval $(lesspipe)
-#export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
-export LESS=" -R "
+# eval $(lesspipe)
+export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
+export LESS=" -R -i -J "
 
 
 # Load aliases
 source ~/repos/dotfiles/zsh/aliases
 # Load functions
 source ~/repos/dotfiles/zsh/functions
-# Load jira functions
-source ~/repos/dotfiles/zsh/jira
+# Load mob settings
+source ~/repos/dotfiles/zsh/mob
 function aws() {
   unset -f aws
   if [ $commands[aws] ]; then
     # aws complete
-    source /home/pt/.local/bin/aws_zsh_completer.sh
+    complete -C '$(which aws_completer)' aws 
+    #source /home/pt/.local/bin/aws_zsh_completer.sh
   fi
   aws $*
 }
@@ -173,15 +186,24 @@ if [[ ! -d "$ZSH/completions" || ! -f "$ZSH/completions/_gh" ]]; then
     echo "gh added completions: gh completion --shell zsh > $ZSH/completions/_gh"
 fi
 
+# sdk complete
+function sdk() {
+  unset -f sdk
+  source <(sdk --completion bash)
+  sdk $*
+}
+
 unsetopt auto_cd
 # run profiler
 #zprof
-export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/"
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # direnv
 eval "$(direnv hook zsh)"
 
 # HELP!
 export HELPDIR='/usr/share/zsh/help'
 alias help='run-help'
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/pt/.sdkman"
+[[ -s "/home/pt/.sdkman/bin/sdkman-init.sh" ]] && source "/home/pt/.sdkman/bin/sdkman-init.sh"
 

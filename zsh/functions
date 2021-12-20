@@ -1,6 +1,6 @@
-hub_clone_speedledger () {
+gh_clone_speedledger () {
   # clone $1 (repo) to $2 (custom name) or default to repo name
-  hub clone speedledger/$1 ${2-$1}
+  gh repo clone speedledger/$1 ${2-$1}
 }
 wtfpipeoutput () {
   # TLDR on stdout / stderr
@@ -10,6 +10,18 @@ wtfpipeoutput () {
     command > out 2>error   # std out to out, stderr to error
 EOF
 }
+wtfssl () {
+cat << END
+  # to check the cert info from CLI, use this
+  echo | openssl s_client -showcerts -servername google.com -connect google.com:443 2>/dev/null | openssl x509 -inform pem -noout -text
+  # or this other funcation I created in this file
+  checksslcert google.com
+END
+}
+checksslcert () {
+  echo | openssl s_client -showcerts -servername "${1}" -connect "${1}":443 2>/dev/null | openssl x509 -inform pem -noout -text
+}
+
 wtfrebase () {
   # TLDR on rebase
   cat << EOF
@@ -25,6 +37,19 @@ wtfrebase () {
                             /
                D---E---F---G master
 EOF
+}
+wtfcron() {
+  cat << WTF
+  # ┌───────────── minute (0 - 59)
+  # │ ┌───────────── hour (0 - 23)
+  # │ │ ┌───────────── day of the month (1 - 31)
+  # │ │ │ ┌───────────── month (1 - 12)
+  # │ │ │ │ ┌───────────── day of the week (0 - 6) (Sunday to Saturday;
+  # │ │ │ │ │                                   7 is also Sunday on some systems)
+  # │ │ │ │ │
+  # │ │ │ │ │
+  # * * * * * <command to execute>
+WTF
 }
 tldrrebase () {
   wtfrebase
@@ -59,7 +84,7 @@ cat << EOF
   psql>\o '/tmp/output.csv'
   psql>SELECT * from users;
   psql>\q
------------ 
+-----------
   pgcli>\T csv
   pgcli>\o '/tmp/output.csv'
   pgcli>SELECT * from users;
@@ -70,10 +95,10 @@ lsearch() {
   lpass show -G ".*$@.*"
 }
 reminder() {
-  clear ; echo "\n\n\n\n\n" ; figlet -c -f slant "$@" -k -t ; echo "\n\n\n\n\n\n"
+  clear ; printf "\n\n\n\n\n" ; figlet -c -f slant "$@" -k -t ; printf "\n\n\n\n\n\n"
 }
 convertvnfxlsx() {
-  xlsx2csv -d';' $1 | sed 's/;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;//' > $1.csv
+  xlsx2csv -d';' "$1" | sed 's/;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;//' > "$1".csv
 }
 
 ### tmux
@@ -97,20 +122,20 @@ vimfind(){
   vim -c ":find $1"
 }
 plainvim() {
-  vim -u NONE $@
+  vim -u NONE "$@"
 }
 
 
 browsh() {
-  docker run --rm -it -v $HOME/.config/browsh/config.toml:/app/.config/browsh/config.toml browsh/browsh
+  docker run --rm -it -v "$HOME"/.config/browsh/config.toml:/app/.config/browsh/config.toml browsh/browsh
 }
 dryconflict() {
-  git merge-tree $(git merge-base $2 $1) $2 $1 | ag '^\<+ \.our$'
+  git merge-tree "$(git merge-base "$2" "$1")" "$2" "$1" | ag '^\<+ \.our$'
 }
 
 showmethecolors() {
   for i in {0..255}; do
-    printf "\x1b[38;5;${i}mcolour${i}\x1b[0m\n"
+    printf "\x1b[38;5;%smcolour%s\x1b[0m\n" "$i" "$i"
   done
 }
 
@@ -125,5 +150,111 @@ EOF
 nvm() {
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-  nvm $*
+  nvm "$@"
+}
+
+# yubi
+yk() {
+  ykman oath code -s "$@" |pbcopy
+}
+# aws-vault
+avdev() {
+  aws-vault $1 -t `ykman oath accounts code -s peter.thorin` peter.thorin "${@:3}"
+}
+av() {
+  aws-vault "$1" -t "$( ykman oath accounts code -s Amazon )" pt "${@:3}"
+}
+avs() {
+  aws-vault "$1" -t "$( ykman oath accounts code -s Amazon )" "$2" "${@:4}"
+}
+avadmin() {
+  aws-vault "$1" -t "$(ykman oath accounts code -s Amazon)" admin "${@:3}"
+}
+
+av4free() {
+  aws-vault "$1" -t "$( ykman oath accounts code -s peter@pt4free )" peter4free "${@:3}"
+}
+#kubens() { kubectl config set-context --current --namespace=$1 }
+
+# gh
+ghwatch() {
+  while ! gh pr checks; do sleep 30 && clear && gh pr checks; done
+}
+
+update_helmfile() {
+  cd ~/Downloads || exit
+  curl -L https://github.com/roboll/helmfile/releases/latest/download/helmfile_linux_amd64 -o helmfile
+  chmod u+x helmfile
+  mv helmfile /usr/local/bin/helmfile
+  helmfile --version
+  cd - || exit
+}
+
+update_aws_vault() {
+  aws-vault --version
+  cd ~/Downloads || exit
+  if [ -f aws-vault-linux-amd64 ]; then
+    rm aws-vault-linux-amd64
+  fi
+  curl -L https://github.com/99designs/aws-vault/releases/latest/download/aws-vault-linux-amd64 -o /usr/local/bin/aws-vault
+  chmod u+x /usr/local/bin/aws-vault
+  aws-vault --version
+  cd - || exit
+}
+
+update_go() {
+  go version
+  cd ~/Downloads || exit
+  wget https://go.dev/dl/go1.17.3.linux-amd64.tar.gz
+  rm -rf /usr/local/go && tar -C /usr/local -xzf go1.17.3.linux-amd64.tar.gz
+  rm go1.17.3.linux-amd64.tar.gz
+  go version
+  cd - || exit
+}
+
+update_sam() {
+  sam --version
+  cd ~/Downloads || exit
+  if [ -f aws-sam-cli-linux-x86_64.zip ]; then
+    rm aws-sam-cli-linux-x86_64.zip
+  fi
+  if [ -d sam-installation ]; then
+    rm -r sam-installation
+  fi
+  wget https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
+  unzip aws-sam-cli-linux-x86_64.zip -d sam-installation
+  sudo ./sam-installation/install --update
+  sam --version
+  cd - || exit
+}
+
+update_starship() {
+  starship --version
+  cd ~/Downloads || exit
+  if [ -f starship-x86_64-unknown-linux-gnu.tar.gz ]; then
+    rm starship-x86_64-unknown-linux-gnu.tar.gz
+  fi
+  curl -L https://github.com/starship/starship/releases/latest/download/starship-x86_64-unknown-linux-gnu.tar.gz -o starship-x86_64-unknown-linux-gnu.tar.gz
+  tar -zxf starship-x86_64-unknown-linux-gnu.tar.gz -C /usr/local/bin
+  starship --version
+  cd - || exit
+}
+
+streamwebcam() {
+  sudo modprobe v4l2loopback exclusive_caps=1
+  ffmpeg -i http://192.168.1.92:8080/video/mjpeg -f v4l2 -pix_fmt yuv420p /dev/video2
+}
+
+# jira
+jira() {
+  google-chrome --profile-directory="Default" "https://jira.visma.com/browse/$1"
+}
+
+mdman() {
+  pandoc -s -f markdown -t man "$1" |groff -T utf8 -man -
+}
+
+weather() {
+# weather
+  docker run --rm -it jessfraz/weather -u si "$*"
 }

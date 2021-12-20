@@ -1,16 +1,16 @@
 #!/bin/bash
 revert() {
-  rm /tmp/*screen*.png 
+  # rm /tmp/*screen*.png 
   xset dpms 0 0 0
   killall -SIGUSR2 dunst # Resume
 }
 killall -SIGUSR1 dunst # Pause
 trap revert HUP INT TERM
-import -window root /tmp/locking_screen.png
-convert -blur 0x8 /tmp/locking_screen.png /tmp/screen_blur.png
-#convert -composite /tmp/screen_blur.png ~/Pictures/guldhedsparken.jpg /tmp/screen.png
-rm /tmp/locking_screen.png
-cp /tmp/screen_blur.png /tmp/screen.png
+#import -window root /tmp/locking_screen.png
+#convert -blur 0x8 /tmp/locking_screen.png /tmp/screen_blur.png
+##convert -composite /tmp/screen_blur.png ~/Pictures/guldhedsparken.jpg /tmp/screen.png
+#rm /tmp/locking_screen.png
+#cp /tmp/screen_blur.png /tmp/screen.png
 xset +dpms dpms 5 5 5
-i3lock -i /tmp/screen.png -n
+i3lock -n #-i /tmp/screen.png -n
 revert

@@ -64,3 +64,20 @@ setw -g window-status-bell-style 'fg=colour8 bg=colour8 bold'
 
 # messages
 set -g message-style 'fg=colour3 bold'
+
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'dracula/tmux'
+
+set -g @dracula-military-time true
+set -g @dracula-show-fahrenheit false
+set -g @dracula-day-month true
+set -g @dracula-show-timezone false
+set -g @dracula-show-powerline true
+set -g @dracula-show-location false
+
+set -g @dracula-ram-usage false
+set -g @dracula-gpu-usage false
+set -g @dracula-cpu-usage false
+
+run '~/.tmux/plugins/tpm/tpm'
+
