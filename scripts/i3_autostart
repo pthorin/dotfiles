@@ -9,3 +9,4 @@ xmodmap ~/.Xmodmap &
 slack &
 signal-desktop &
 dunst &
+workrave &
