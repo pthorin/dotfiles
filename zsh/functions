@@ -228,6 +228,10 @@ update_sam() {
   cd - || exit
 }
 
+install_gogh() {
+  bash -c  "$(wget -qO- https://git.io/vQgMr)"
+}
+
 update_starship() {
   starship --version
   cd ~/Downloads || exit
