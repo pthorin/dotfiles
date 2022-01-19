@@ -53,7 +53,9 @@ bindsym $mod+Shift+q kill
 #bindsym $mod+d exec --no-startup-id rofi -combi-modi window#drun#ssh
 #bindsym $mod+d exec --no-startup-id "rofi -show window,drun,ssh -font \\"DejaVu 9\\" -run-shell-command '{terminal} -e \\" {cmd}; read -n 1 -s\\"'"
 bindsym $mod+d exec --no-startup-id "rofi -modi combi -show combi -combi-modi window#drun#ssh#run"
+bindsym section exec --no-startup-id "rofi -modi combi -show combi -combi-modi window#drun#ssh#run"
 bindsym $mod+shift+d exec --no-startup-id "rofi -modi run -show run"
+bindsym shift+section exec --no-startup-id "rofi -modi run -show run"
 
 
 # change focus
@@ -111,9 +113,13 @@ bindsym $mod+a layout default
 
 # switch to workspace
 bindsym $mod+1 workspace 1
+bindsym F1 workspace 1
 bindsym $mod+2 workspace 2
+bindsym F2 workspace 2
 bindsym $mod+3 workspace 3
+bindsym F3 workspace 3
 bindsym $mod+4 workspace 4
+bindsym F4 workspace 4
 bindsym $mod+5 workspace 5
 bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
@@ -223,7 +229,7 @@ bindsym $mod+m move workspace to output left
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
-bindsym F1 exec --no-startup-id /home/pt/scripts/mute-mic.sh
+bindsym KP_Subtract exec --no-startup-id /home/pt/scripts/mute-mic.sh
 
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec --no-startup-id brightness-up # increase screen brightness
@@ -249,9 +255,13 @@ for_window [title="^Spotify"] mark "music" #, move scratchpad
 #for_window [title="^Element"] move scratchpad
 #for_window [title=".*Discord$"] move scratchpad
 bindsym $mod+comma [con_mark="music"] scratchpad show
+bindsym F12 [con_mark="music"] scratchpad show
 bindsym $mod+period [title="^Slack"] scratchpad show
+bindsym F9 [title="^Slack"] scratchpad show
 bindsym $mod+i [title="^Signal"] scratchpad show
+bindsym F10 [title="^Signal"] scratchpad show
 bindsym $mod+o [title=".*Discord$"] scratchpad show
+bindsym F11 [title=".*Discord$"] scratchpad show
 bindsym $mod+Shift+comma [title="^Element"] scratchpad show
 
 for_window [title="^JetBrains Toolbox"] floating enable
