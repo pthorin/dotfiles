@@ -262,3 +262,7 @@ weather() {
 # weather
   docker run --rm -it jessfraz/weather -u si "$*"
 }
+
+setmousequickaslightning() {
+  xset mouse 10 0
+}
