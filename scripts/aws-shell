@@ -1,0 +1,12 @@
+#!/bin/bash
+
+function cleanup() {
+    rm "${env_file}"
+}
+
+trap cleanup EXIT
+
+env_file=$(mktemp)
+env | grep ^AWS_ > "${env_file}"
+
+docker run -it --rm -v $HOME/.aws:/root/.aws --env-file="${env_file}" pahud/aws-shell
