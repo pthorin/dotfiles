@@ -6,6 +6,7 @@
   praise = blame
   ls = log --graph --decorate --format=short --all
   lminimal = log --graph --decorate --pretty=oneline --all
+  lm = lminimal
   lsg = log --graph --decorate --all
   lsp = log --graph --decorate --format=short --all -p
   last = log -1
