@@ -266,3 +266,7 @@ weather() {
 setmousequickaslightning() {
   xset mouse 10 0
 }
+
+httpcat() {
+  curl "https://http.cat/$1" -o - |feh -
+}
