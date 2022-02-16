@@ -74,3 +74,5 @@ alias awslogin='aws-vault exec -t `ykman oath accounts code -s Amazon` pt'
 alias avl='av login'
 alias ave='av exec'
 alias today='date --date today -I'
+
+alias icanhazip='curl https://icanhazip.com'
