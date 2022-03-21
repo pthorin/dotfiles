@@ -1,0 +1,10 @@
+right_format = """$time"""
+
+[kubernetes]
+disabled = false
+
+[time]
+disabled = false
+style = "bold bright-purple"
+format = '🕙 $time ($style)'
+
