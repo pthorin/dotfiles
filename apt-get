@@ -18,23 +18,18 @@ install_stuff () {
     xbacklight \
     xautolock \
     compton \
-    fish \
     i3 \
     display-dhammapada \
     curl \
-    httpie \
     ctags \
     git \
     neovim \
     mutt \
     pandoc \
     w3m w3m-img \
-    python-dev python-pip python3-dev python3-pip \
-    openjdk-8-jdk openjdk-8-jre \
     signal-desktop \
-    maven \
     xclip \
-    sbt
+    source-highlight
 }
 
 update_alternatives () {
