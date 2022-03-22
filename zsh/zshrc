@@ -4,14 +4,14 @@
 export PATH=$HOME/bin:/usr/local/bin:/usr/local/go/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/pt/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 #ZSH_THEME="agnoster"
-ZSH_THEME="pt-magic"
+ZSH_THEME="af-magic"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -76,21 +76,22 @@ plugins=(
   #git
   #kube-ps1
   ssh-agent
-  zsh-completions
-  just)
+  #zsh-completions
+  )
 
-zstyle :omz:plugins:ssh-agent identities id_rsa test.pem production.pem sfprod.pem
+zstyle :omz:plugins:ssh-agent identities id_ed25519 id_rsa
 
 source $ZSH/oh-my-zsh.sh
 autoload -U compinit && compinit
 
 # User configuration
-export DEFAULT_USER=pt
+export DEFAULT_USER=pthorin
 prompt_context(){}
 #PROMPT=$PROMPT'$(kube_ps1) '
 #
 # Set some paths
 export PATH=$PATH:~/scripts
+export PATH=$PATH:~/.local/bin
 export PATH=$PATH:~/go/bin
 export PATH=$PATH:~/.gem/ruby/2.7.0/bin
 #export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/"
@@ -114,11 +115,11 @@ export PAGER='less -F'
 source <("starship" init zsh --print-full-init)
 
 # copied from zsh-completion
-#source /home/pt/repos/dotfiles/zsh/completion.zsh
+# source $HOME/repos/dotfiles/zsh/completion.zsh
 # end of copy
 #bindkey -M menuselect '^[[Z' reverse-menu-complete # shift-tab reverses autocomplete
 
-source <(kubecolor completion zsh |sed s/kubectl/kubecolor/g)
+# source <(kubecolor completion zsh |sed s/kubectl/kubecolor/g)
 
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^ ' autosuggest-accept
@@ -134,8 +135,8 @@ export CDPATH=.:~:~/repos
 
 # Tiny Care Terminal
 #export TTC_BOTS='honest_update,dmofengineering,selfcare_bot'
-export TTC_SAY_BOX='/home/pt/repos/dotfiles/nyan.ansi'
-export TTC_REPOS='/home/pt/repos'
+export TTC_SAY_BOX='$HOME/repos/dotfiles/nyan.ansi'
+export TTC_REPOS='$HOME/repos'
 export TTC_REPOS_DEPTH=2
 export TTC_WEATHER='Gothenburg'
 export TTC_CELSIUS=true
@@ -162,7 +163,6 @@ function aws() {
   if [ $commands[aws] ]; then
     # aws complete
     complete -C '$(which aws_completer)' aws 
-    #source /home/pt/.local/bin/aws_zsh_completer.sh
   fi
   aws $*
 }
@@ -197,13 +197,13 @@ unsetopt auto_cd
 # run profiler
 #zprof
 # direnv
-eval "$(direnv hook zsh)"
+# eval "$(direnv hook zsh)"
 
 # HELP!
 export HELPDIR='/usr/share/zsh/help'
 alias help='run-help'
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/pt/.sdkman"
-[[ -s "/home/pt/.sdkman/bin/sdkman-init.sh" ]] && source "/home/pt/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 

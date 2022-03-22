@@ -181,6 +181,18 @@ ghwatch() {
   while ! gh pr checks; do sleep 30 && clear && gh pr checks; done
 }
 
+update_noisetorch() {
+  curl -L https://github.com/lawl/NoiseTorch/releases/latest/download/NoiseTorch_x64.tgz -o - |tar zx -C $HOME
+  sudo setcap 'CAP_SYS_RESOURCE=+ep' ~/.local/bin/noisetorch
+}
+update_nvm() {
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+}
+
+update_docker-compose() {
+  sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  sudo chmod +x /usr/local/bin/docker-compose
+}
 update_helmfile() {
   cd ~/Downloads || exit
   curl -L https://github.com/roboll/helmfile/releases/latest/download/helmfile_linux_amd64 -o helmfile
