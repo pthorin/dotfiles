@@ -11,6 +11,7 @@
 
 set $mod Mod4
 set $alt Mod1
+set $home /home/pthorin
 
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -52,8 +53,10 @@ bindsym $mod+Shift+q kill
 #bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 #bindsym $mod+d exec --no-startup-id rofi -combi-modi window#drun#ssh
 #bindsym $mod+d exec --no-startup-id "rofi -show window,drun,ssh -font \\"DejaVu 9\\" -run-shell-command '{terminal} -e \\" {cmd}; read -n 1 -s\\"'"
-bindsym $mod+d exec --no-startup-id "rofi -modi combi -show combi -combi-modi window#drun#ssh#run"
-bindsym section exec --no-startup-id "rofi -modi combi -show combi -combi-modi window#drun#ssh#run"
+#bindsym $mod+d exec --no-startup-id "rofi -modi combi -show combi -combi-modi window#drun#ssh#run"
+bindsym $mod+d exec --no-startup-id $home/.config/rofi/bin/launcher_text
+bindsym section exec --no-startup-id $home/.config/rofi/bin/launcher_text
+#bindsym section exec --no-startup-id "rofi -modi combi -show combi -combi-modi window#drun#ssh#run"
 bindsym $mod+shift+d exec --no-startup-id "rofi -modi run -show run"
 bindsym shift+section exec --no-startup-id "rofi -modi run -show run"
 
@@ -113,13 +116,13 @@ bindsym $mod+a layout default
 
 # switch to workspace
 bindsym $mod+1 workspace 1
-bindsym F1 workspace 1
+# bindsym F1 workspace 1
 bindsym $mod+2 workspace 2
-bindsym F2 workspace 2
+# bindsym F2 workspace 2
 bindsym $mod+3 workspace 3
-bindsym F3 workspace 3
+# bindsym F3 workspace 3
 bindsym $mod+4 workspace 4
-bindsym F4 workspace 4
+# bindsym F4 workspace 4
 bindsym $mod+5 workspace 5
 bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
@@ -183,6 +186,7 @@ bar {
   tray_output DP-2
   tray_output DP-1-1-1
   tray_output eDP-1
+  tray_output default
 
   #tray_padding 0
 
@@ -216,9 +220,9 @@ new_window none
 new_float normal
 
 # Lock screen
-bindsym Ctrl+Mod1+l exec --no-startup-id /home/pt/scripts/fuzz
+bindsym Ctrl+Mod1+l exec --no-startup-id $home/scripts/fuzz
 # reset screen
-bindsym $mod+F8 exec --no-startup-id /home/pt/scripts/resetscreen
+bindsym $mod+F8 exec --no-startup-id $home/scripts/resetscreen
 
 bindsym $mod+Ctrl+m move workspace to output down
 bindsym $mod+Ctrl+Shift+m move workspace to output up
@@ -229,7 +233,7 @@ bindsym $mod+m move workspace to output left
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
-bindsym KP_Subtract exec --no-startup-id /home/pt/scripts/mute-mic.sh
+bindsym KP_Subtract exec --no-startup-id $home/scripts/mute-mic.sh
 
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec --no-startup-id brightness-up # increase screen brightness
@@ -240,28 +244,30 @@ bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioPause exec --no-startup-id playerctl pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
-bindsym --release Print exec --no-startup-id /home/pt/scripts/import-to-clipboard
-bindsym --release Shift+Print exec --no-startup-id /home/pt/scripts/import-to-file
+bindsym --release Print exec --no-startup-id $home/scripts/import-to-clipboard
+bindsym --release Shift+Print exec --no-startup-id $home/scripts/import-to-file
 
-exec xmodmap /home/pt/.xmodmaprc
+exec xmodmap $home/.xmodmaprc
 
 # Scratchpad
 # Make the currently focused window a scratchpad
 bindsym $mod+Shift+minus move scratchpad
 for_window [title="^Spotify"] mark "music" #, move scratchpad
-#for_window [title="^Slack"] move scratchpad
-#for_window [title="^Signal"] move scratchpad
-#for_window [title="^Riot"] move scratchpad
-#for_window [title="^Element"] move scratchpad
-#for_window [title=".*Discord$"] move scratchpad
+# for_window [title="^Slack"] move scratchpad
+for_window [title="^Signal"] move scratchpad
+for_window [title="^Riot"] move scratchpad
+for_window [title="^Element"] move scratchpad
+for_window [title=".*Discord$"] move scratchpad
+for_window [title=".*Teams$"] move scratchpad
 bindsym $mod+comma [con_mark="music"] scratchpad show
-bindsym F12 [con_mark="music"] scratchpad show
+# bindsym F12 [con_mark="music"] scratchpad show
 bindsym $mod+period [title="^Slack"] scratchpad show
-bindsym F9 [title="^Slack"] scratchpad show
+bindsym $mod+t [title=".*Teams$"] scratchpad show
+# bindsym F9 [title="^Slack"] scratchpad show
 bindsym $mod+i [title="^Signal"] scratchpad show
-bindsym F10 [title="^Signal"] scratchpad show
+# bindsym F10 [title="^Signal"] scratchpad show
 bindsym $mod+o [title=".*Discord$"] scratchpad show
-bindsym F11 [title=".*Discord$"] scratchpad show
+# bindsym F11 [title=".*Discord$"] scratchpad show
 bindsym $mod+Shift+comma [title="^Element"] scratchpad show
 
 for_window [title="^JetBrains Toolbox"] floating enable
@@ -273,11 +279,12 @@ bindsym $mod+minus scratchpad show
 bindsym Mod1+Tab focus right
 bindsym Mod1+Shift+Tab focus left
 
-exec_always --no-startup-id /home/pt/scripts/i3_autostart_always
-exec --no-startup-id /home/pt/scripts/i3_autostart
+exec_always --no-startup-id $home/scripts/i3_autostart_always
+exec --no-startup-id $home/scripts/i3_autostart
 
 bindsym $mod+F5 exec --no-startup-id killall -SIGUSR1 dunst # Pause
 bindsym $mod+Shift+F5 exec --no-startup-id killall -SIGUSR2 dunst # Resume
 
 bindsym $mod+u exec --no-startup-id gnome-pomodoro --start
 bindsym $mod+Shift+u exec --no-startup-id gnome-pomodoro --pause-resume
+exec --no-startup-id xinput set-prop 13 'libinput Tapping Enabled' 1 # Set tapping enabled
