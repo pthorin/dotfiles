@@ -1,12 +1,14 @@
 #!/usr/bin/env zsh
-compton --config /home/pt/.config/compton/compton.conf -b
+compton --config $HOME/.config/compton/compton.conf -b &
 transset --name i3bar &
-/home/pt/.fehbg &
+$HOME/.fehbg &
 nm-applet &
 setxkbmap -option caps:escape &
 numlockx &
 xmodmap ~/.Xmodmap &
 slack &
+teams &
 signal-desktop &
 dunst &
 workrave &
+blueman-manager &

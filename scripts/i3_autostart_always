@@ -2,4 +2,4 @@
 xset s off &
 xset -dpms &
 xset r off &
-xmodmap /home/pt/.Xmodmap
+xmodmap $HOME/.Xmodmap
