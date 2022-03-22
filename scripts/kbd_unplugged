@@ -1,8 +1,0 @@
-#!/bin/bash
-sleep 1
-DISPLAY=":0"
-HOME=/home/pt/
-XAUTHORITY=/run/user/1000/gdm/Xauthority 
-export DISPLAY HOME XAUTHORITY
-xmodmap /home/pt/.Xmodmap-mobile
-xmodmap /home/pt/.Xmodmap-mobile
