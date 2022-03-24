@@ -1,2 +1,0 @@
-#!/usr/bin/env bash
-let x=$(brightness)+10 ; brightness $x

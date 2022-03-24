@@ -261,11 +261,6 @@ streamwebcam() {
   ffmpeg -i http://192.168.1.92:8080/video/mjpeg -f v4l2 -pix_fmt yuv420p /dev/video2
 }
 
-# jira
-jira() {
-  google-chrome --profile-directory="Default" "https://jira.visma.com/browse/$1"
-}
-
 mdman() {
   pandoc -s -f markdown -t man "$1" |groff -T utf8 -man -
 }
@@ -281,4 +276,8 @@ setmousequickaslightning() {
 
 httpcat() {
   curl "https://http.cat/$1" -o - |feh -
+}
+
+brightness() {
+  xrandr --output DP-6 --brightness $(echo "scale=2; $1/10" | bc -l)
 }
