@@ -31,7 +31,7 @@ kns() {
 }
 alias kec='kubecolor config view --minify=true --flatten --context'
 alias vkcp='watch -n 1 kubecolor get pods'
-alias agenda='date ; gcalcli --calendar SpeedLedger --calendar Gemensam agenda $(date -I) $(date -I --date tomorrow) --details end --military'
+alias agenda='date ; gcalcli --calendar Volvo --calendar Gemensam agenda $(date -I) $(date -I --date tomorrow) --details end --military'
 
 alias cw='circle watch'
 alias i3config='vim ~/.config/i3/config'
@@ -51,7 +51,7 @@ alias gitmoji="docker run --rm -it gitmoji-cli"
 # hello
 # alias say='espeak -v sv -s 200'
 # gcalcli
-alias week='gcalcli --calendar Gemensam --calendar SpeedLedger calw 1'
+alias week='gcalcli --calendar Gemensam --calendar Volvo calw 1'
 alias gitvim="vim -c 'Git |wincmd o' ."
 # copy paste
 alias pbcopy='xclip -selection clipboard'
@@ -101,3 +101,11 @@ alias mongodb="docker run --name mongodb \
     -e MONGO_INITDB_ROOT_USERNAME=mongo \
     -e MONGO_INITDB_ROOT_PASSWORD=mongo \
     -d mongo:latest"
+
+# maven
+alias mvnddu='mvn versions:display-dependency-updates'
+alias mvndpu='mvn versions:display-property-updates'
+alias mvnup='mvn versions:update-properties -DgenerateBackupPoms=false'
+alias mvnfmt='mvn com.spotify.fmt:fmt-maven-plugin:format'
+alias mvnbump='mvn versions:set -DgenerateBackupPoms=false'
+alias=installgo='curl -L https://go.dev/dl/go1.18.linux-amd64.tar.gz -o - | tar xzf - -C /usr/local/'
