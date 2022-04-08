@@ -76,7 +76,7 @@ plugins=(
   #git
   #kube-ps1
   ssh-agent
-  #zsh-completions
+  zsh-completions
   )
 
 zstyle :omz:plugins:ssh-agent identities id_ed25519 id_rsa
@@ -119,7 +119,8 @@ source <("starship" init zsh --print-full-init)
 # end of copy
 #bindkey -M menuselect '^[[Z' reverse-menu-complete # shift-tab reverses autocomplete
 
-# source <(kubecolor completion zsh |sed s/kubectl/kubecolor/g)
+#source <(kubecolor completion zsh |sed s/kubectl/kubecolor/g)
+source /etc/bash_completion.d/azure-cli
 
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^ ' autosuggest-accept
