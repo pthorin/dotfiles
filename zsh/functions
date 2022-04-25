@@ -1,6 +1,6 @@
-gh_clone_speedledger () {
+gh_clone_volvo () {
   # clone $1 (repo) to $2 (custom name) or default to repo name
-  gh repo clone speedledger/$1 ${2-$1}
+  gh repo clone volvo-cars/$1 ${2-$1}
 }
 wtfpipeoutput () {
   # TLDR on stdout / stderr
@@ -280,4 +280,8 @@ httpcat() {
 
 brightness() {
   xrandr --output DP-6 --brightness $(echo "scale=2; $1/10" | bc -l)
+}
+
+epochtodate() {
+  date --date=@$1
 }

@@ -29,7 +29,8 @@ install_stuff () {
     w3m w3m-img \
     signal-desktop \
     xclip \
-    source-highlight
+    source-highlight \
+    playerctl
 }
 
 update_alternatives () {

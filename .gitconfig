@@ -26,6 +26,7 @@
   bdone = "!f() { git checkout ${2-master} && git up && git bclean ${1-master}; }; f"
   # rebdone = "!f() { git checkout master && git up && git checkout $1 && git rebase master && if [ $(git need-rebase) -eq 1 ]; then git rebase master ; fi && git bdone }; f"
   clean-branches ="!f() { git checkout main && git up && git branch --list |grep -v " main$" | xargs git branch -d; }; f"
+  clean-master-branches ="!f() { git checkout master && git up && git branch --list |grep -v " master$" | xargs git branch -d; }; f"
   list = branch --list
   list-merged = branch --merged
   need-rebase = "!f() { current=$(git rev-parse --abbrev-ref HEAD); hash1=$(git show-ref --heads -s master); hash2=$(git merge-base ${current} master); PAGER='' git diff --shortstat ${hash1} ${hash2}; test "${hash1}" = "${hash2}" && echo "Nah, we good." && exit 0 || echo "Rebase is required"; exit 1; }; f"
@@ -61,3 +62,8 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[credential]
+	helper = /usr/local/share/gcm-core/git-credential-manager-core
+	credentialStore = secretservice
+[credential "https://dev.azure.com"]
+	useHttpPath = true

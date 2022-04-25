@@ -2,6 +2,7 @@ alias zshconfig="$EDITOR ~/.zshrc"
 alias ohmyzsh="$EDITOR ~/.oh-my-zsh"
 # git 
 alias ga='git add'
+alias gd='git diff'
 alias amend='git commit --amend'
 alias gamend='git commit --amend'
 alias gam='git commit --amend'
@@ -19,7 +20,7 @@ alias gc='git commit --interactive -m '
 alias gcane='git commit --amend --no-edit'
 alias gco='git checkout'
 alias gcob='git cob'
-alias ghclone='gh_clone_speedledger'
+alias ghclone='gh_clone_volvo'
 alias lg='lazygit'
 # kubectl
 alias kc='kubecolor'
@@ -31,7 +32,7 @@ kns() {
 }
 alias kec='kubecolor config view --minify=true --flatten --context'
 alias vkcp='watch -n 1 kubecolor get pods'
-alias agenda='date ; gcalcli --calendar Volvo --calendar Gemensam agenda $(date -I) $(date -I --date tomorrow) --details end --military'
+alias agenda='date ; gcalcli agenda $(date -I) $(date -I --date tomorrow) --details end --military'
 
 alias cw='circle watch'
 alias i3config='vim ~/.config/i3/config'

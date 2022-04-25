@@ -98,7 +98,7 @@ export PATH=$PATH:~/.gem/ruby/2.7.0/bin
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH=$PATH:./node_modules/.bin
 export PATH=$PATH:~/repos/docker-bin
-export PATH=$PATH:~/Applications/kui
+export PATH=$PATH:/usr/local/bin/kui
 
 if (( ! ${fpath[(I)/usr/local/share/zsh/site-functions]} )); then
   FPATH=/usr/local/share/zsh/site-functions:$FPATH
@@ -127,6 +127,7 @@ bindkey '^ ' autosuggest-accept
 bindkey '\e' autosuggest-clear
 
 
+GCM_CREDENTIAL_STORE=secretservice
 # get all the zecrets!
 source ~/.zecrets > /dev/null
 

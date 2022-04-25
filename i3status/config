@@ -14,8 +14,9 @@ general {
   color_degraded = "#FFC300"
 }
 
+order += "read_file agenda"
 order += "load"
-order += cpu_usage
+order += "cpu_usage"
 #order += "ipv6"
 #order += "disk /"
 order += "battery 0"
@@ -66,4 +67,12 @@ cpu_usage {
   degraded_threshold = 50
   format_above_threshold = "🔥 %usage"
   format_above_degraded_threshold = "🥵  %usage"
+}
+
+read_file agenda {
+  color_good = "#fafafa"
+  path = "/tmp/gcalcli_agenda"
+  align = "left"
+  min_width = 1500
+  format = "🗓️ %content"
 }
