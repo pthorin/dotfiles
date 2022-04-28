@@ -14,6 +14,7 @@ general {
   color_degraded = "#FFC300"
 }
 
+order += "read_file weeknumber"
 order += "read_file agenda"
 order += "load"
 order += "cpu_usage"
@@ -75,4 +76,11 @@ read_file agenda {
   align = "left"
   min_width = 1500
   format = "🗓️ %content"
+}
+
+read_file weeknumber {
+  color_good = "#fafafa"
+  path = "/tmp/weeknumber"
+  align = "left"
+  format = "Week: %content"
 }
