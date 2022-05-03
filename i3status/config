@@ -74,7 +74,7 @@ read_file agenda {
   color_good = "#fafafa"
   path = "/tmp/gcalcli_agenda"
   align = "left"
-  min_width = 1500
+  # min_width = 1500
   format = "🗓️ %content"
 }
 

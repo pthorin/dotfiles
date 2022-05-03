@@ -7,8 +7,8 @@ setxkbmap -option caps:escape &
 numlockx &
 xmodmap ~/.Xmodmap &
 slack &
-teams &
 signal-desktop &
+sudo openvpn --config ~/ovpn/PTHORIN@vpn.oss.volvoc3.com.ovpn --daemon &
 dunst &
 workrave &
 blueman-manager &

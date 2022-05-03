@@ -251,6 +251,8 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym --release Print exec --no-startup-id $home/scripts/import-to-clipboard
 bindsym --release Shift+Print exec --no-startup-id $home/scripts/import-to-file
 
+bindsym XF86Display exec $home/scripts/xrandr-on
+
 exec xmodmap $home/.xmodmaprc
 
 # Scratchpad

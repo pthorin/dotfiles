@@ -1,4 +1,4 @@
-#!/bin/bash
-xrandr --output eDP-1 --auto --primary
-for x in $(xrandr |grep -E '^DP' |cut -d' ' -f1) ; do xrandr --output $x --off ; done
+#!/usr/bin/bash
+xrandr --output DP-6 --auto --primary
+for x in $(xrandr |grep -E '^DP-.' -o) ; do xrandr --output "$x" --off ; done
 "$HOME/.fehbg"

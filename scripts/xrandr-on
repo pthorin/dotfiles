@@ -1,25 +1,10 @@
-#!/bin/bash
-#xrandr --output DP-2-1-8 --auto --above eDP-1 --primary
-# xrandr --output DP-1-1-8 --auto --right-of eDP-1
-# xrandr --output DP-2-2 --auto --right-of DP-1-1-8
-# xrandr --output DP-1-1-1 --auto --right-of DP-1-1-8
-# xrandr --output DP-2-1-8 --auto --right-of eDP-1
-# xrandr --output DP-2-1-1 --auto --right-of DP-2-1-8
-# xrandr --output DP-1-2 --auto --right-of DP-2-1-8
+#!/bin/sh
 
-if [ $(xrandr |ag "DP-1-1-8 connected" | wc -l) -gt 0 ]; then
-  xrandr --output DP-1-1-8 --auto --above eDP-1 --primary
-  xrandr --output DP-2 --auto --rotate normal --right-of DP-1-1-8
-  #xrandr --output DP-2 --auto --rotate left --right-of DP-1-1-8
+if [ "$(xrandr | ag 'DP-6 connected' | wc -l)" -gt 0 ]; then
+  xrandr --output DP-6 --auto
 fi
-
-if [ $(xrandr | ag "DP-1 connected" | wc -l) -gt 0 ]; then
-  xrandr --output DP-1 --auto --rotate normal --above eDP-1 # --right-of DP-2-1-8
+if [ "$(xrandr |ag 'DP-4 connected' | wc -l)" -gt 0 ]; then
+  xrandr --output DP-4 --auto --above DP-6 --primary
 fi
-if [ $(xrandr |ag "DP-2-1-8 connected" | wc -l) -gt 0 ]; then
-  xrandr --output DP-2-1-8 --auto --above eDP-1 --primary
-  #xrandr --output DP-1 --auto --rotate left --right-of DP-2-1-8
-fi
-# xrandr --output eDP-1 --pos 0x0 # --pos 1700x1440
 "$HOME/.fehbg"
 
