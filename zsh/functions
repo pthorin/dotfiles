@@ -284,7 +284,12 @@ httpcat() {
 }
 
 brightness() {
-  xrandr --output DP-6 --brightness $(echo "scale=2; $1/10" | bc -l)
+  #xrandr --output DP-6 --brightness $(echo "scale=2; $1/10" | bc -l)
+  if [ "$1" -eq "" ]; then
+    echo "scale=0; $(cat /sys/class/backlight/intel_backlight/brightness)/1000"|bc
+  else
+    echo "$1*1000" |bc|sudo tee /sys/class/backlight/intel_backlight/brightness
+  fi
 }
 
 epochtodate() {
