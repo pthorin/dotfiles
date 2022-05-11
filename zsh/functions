@@ -181,6 +181,11 @@ ghwatch() {
   while ! gh pr checks; do sleep 30 && clear && gh pr checks; done
 }
 
+update_vscode() {
+  curl -L "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64" -o ~/Downloads/code.deb
+  sudo apt install ~/Downloads/code.deb
+}
+
 update_noisetorch() {
   curl -L https://github.com/lawl/NoiseTorch/releases/latest/download/NoiseTorch_x64.tgz -o - |tar zx -C $HOME
   sudo setcap 'CAP_SYS_RESOURCE=+ep' ~/.local/bin/noisetorch
