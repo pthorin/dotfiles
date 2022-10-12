@@ -12,6 +12,8 @@
 set $mod Mod4
 set $alt Mod1
 set $home /home/pthorin
+exec --no-startup-id xinput set-prop 13 'libinput Tapping Enabled' 1 # Set tapping enabled
+exec --no-startup-id setxkbmap se # Set swedish keyboard
 
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -53,8 +55,8 @@ bindsym $mod+Shift+q kill
 #bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 #bindsym $mod+d exec --no-startup-id rofi -combi-modi window#drun#ssh
 #bindsym $mod+d exec --no-startup-id "rofi -show window,drun,ssh -font \\"DejaVu 9\\" -run-shell-command '{terminal} -e \\" {cmd}; read -n 1 -s\\"'"
-#bindsym $mod+d exec --no-startup-id "rofi -modi combi -show combi -combi-modi window#drun#ssh#run"
-bindsym $mod+d exec --no-startup-id $home/.config/rofi/bin/launcher_text
+bindsym $mod+d exec --no-startup-id "rofi -modi combi -show combi -combi-modi window#drun#ssh#run"
+#bindsym $mod+d exec --no-startup-id $home/.config/rofi/bin/launcher_text
 bindsym section exec --no-startup-id $home/.config/rofi/bin/launcher_text
 #bindsym section exec --no-startup-id "rofi -modi combi -show combi -combi-modi window#drun#ssh#run"
 bindsym $mod+shift+d exec --no-startup-id "rofi -modi run -show run"
@@ -179,6 +181,9 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
   position top
+  tray_output DP-3-1-8
+  tray_output DP-3-1
+  tray_output DP-1-1-8
   tray_output DP-1-1-8
   tray_output DP-2-1-8
   tray_output DP-1-1
@@ -190,6 +195,7 @@ bar {
   tray_output DP-6
   tray_output DP-1-1-1
   tray_output eDP-1
+  tray_output HDMI-1
   tray_output default
 
   #tray_padding 0
@@ -220,8 +226,10 @@ client.background       #ffffff
 # Custom
 
 # No borders
-new_window none
-new_float normal
+#new_window none
+default_border none
+#new_float normal
+default_floating_border none
 
 # Lock screen
 bindsym Ctrl+Mod1+l exec --no-startup-id $home/scripts/fuzz
@@ -248,10 +256,12 @@ bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioPause exec --no-startup-id playerctl pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
-bindsym --release Print exec --no-startup-id $home/scripts/import-to-clipboard
+bindsym --release Ctrl+Print exec --no-startup-id $home/scripts/import-to-clipboard
 bindsym --release Shift+Print exec --no-startup-id $home/scripts/import-to-file
 
 bindsym XF86Display exec $home/scripts/xrandr-on
+bindsym $mod+F7 exec $home/scripts/xrandr-on
+bindsym $mod+shift+F7 exec /usr/local/bin/hotplug_monitor.sh
 
 exec xmodmap $home/.xmodmaprc
 
@@ -275,8 +285,9 @@ bindsym $mod+i [title="^Signal"] scratchpad show
 bindsym $mod+o [title=".*Discord$"] scratchpad show
 # bindsym F11 [title=".*Discord$"] scratchpad show
 bindsym $mod+Shift+comma [title="^Element"] scratchpad show
-
+bindsym $mod+Shift+w [title=".*1Password$"] scratchpad show
 for_window [title="^JetBrains Toolbox"] floating enable
+for_window [title="^SimpleScreenRecorder"] floating enable
 #for_window [title="emote"] floating enable
 # Show the first scratchpad window
 bindsym $mod+minus scratchpad show
@@ -293,4 +304,4 @@ bindsym $mod+Shift+F5 exec --no-startup-id killall -SIGUSR2 dunst # Resume
 
 bindsym $mod+u exec --no-startup-id gnome-pomodoro --start
 bindsym $mod+Shift+u exec --no-startup-id gnome-pomodoro --pause-resume
-exec --no-startup-id xinput set-prop 13 'libinput Tapping Enabled' 1 # Set tapping enabled
+# exec --no-startup-id xinput set-prop 13 'libinput Tapping Enabled' 1 # Set tapping enabled

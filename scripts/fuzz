@@ -1,10 +1,11 @@
 #!/bin/bash
 revert() {
-  # rm /tmp/*screen*.png 
+  # rm /tmp/*screen*.png
   xset dpms 0 0 0
   killall -SIGUSR2 dunst # Resume
 }
 killall -SIGUSR1 dunst # Pause
+playerctl pause
 trap revert HUP INT TERM
 #import -window root /tmp/locking_screen.png
 #convert -blur 0x8 /tmp/locking_screen.png /tmp/screen_blur.png
@@ -12,5 +13,5 @@ trap revert HUP INT TERM
 #rm /tmp/locking_screen.png
 #cp /tmp/screen_blur.png /tmp/screen.png
 xset +dpms dpms 5 5 5
-i3lock -n #-i /tmp/screen.png -n
+i3lock -n -c 111111 -i /home/pthorin/.local/share/backgrounds/lock.png
 revert

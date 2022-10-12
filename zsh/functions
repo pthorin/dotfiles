@@ -1,7 +1,20 @@
 gh_clone_volvo () {
   # clone $1 (repo) to $2 (custom name) or default to repo name
-  gh repo clone volvo-cars/$1 ${2-$1}
+  gh repo clone volvo-cars/"$1" "${2-$1}"
 }
+
+update_changelog_gh() {
+  #gh release view $1 --json body --json publishedAt --json tagName --json name -q '"## "+.name,"","- Published: "+(.publishedAt|strptime("%FT%TZ")|strftime("%F %T")),"- Tag: "+.tagName,"",.body,""' |sed -i '2r /dev/stdin' CHANGELOG.md
+    gh release view "$1" --json body,name,tagName,publishedAt --template "## {{ .name }}
+
+- Published: {{ .publishedAt }}
+- Tag: {{ .tagName }}
+
+{{ .body }}
+" | sed -i '2r /dev/stdin' CHANGELOG.md
+
+}
+
 wtfpipeoutput () {
   # TLDR on stdout / stderr
   cat << EOF
@@ -14,7 +27,7 @@ wtfssl () {
 cat << END
   # to check the cert info from CLI, use this
   echo | openssl s_client -showcerts -servername google.com -connect google.com:443 2>/dev/null | openssl x509 -inform pem -noout -text
-  # or this other funcation I created in this file
+  # or this other function I created in this file
   checksslcert google.com
 END
 }
@@ -174,11 +187,16 @@ avadmin() {
 av4free() {
   aws-vault "$1" -t "$( ykman oath accounts code -s peter@pt4free )" peter4free "${@:3}"
 }
-#kubens() { kubectl config set-context --current --namespace=$1 }
 
 # gh
 ghwatch() {
   while ! gh pr checks; do sleep 30 && clear && gh pr checks; done
+}
+
+team-involves() {
+  gh api -X GET "orgs/$1/teams/$2/members" \
+    -F per_page=100 --paginate --cache 1h \
+    --jq '[.[].login] | map("involves:\(.)") | join(" ")'
 }
 
 update_vscode() {
@@ -261,9 +279,16 @@ update_starship() {
   cd - || exit
 }
 
+git-delete-squashed() { local targetBranch=${1:-main} && git checkout -q $targetBranch && git branch --merged | grep -v "\*" | xargs -n 1 --no-run-if-empty git branch -d && git for-each-ref refs/heads/ "--format=%(refname:short)" | while read branch; do mergeBase=$(git merge-base $targetBranch $branch) && [[ $(git cherry $targetBranch $(git commit-tree $(git rev-parse $branch^{tree}) -p $mergeBase -m _)) == "-"* ]] && git branch -D $branch; done; }
+
+
 streamwebcam() {
   sudo modprobe v4l2loopback exclusive_caps=1
   ffmpeg -i http://192.168.1.92:8080/video/mjpeg -f v4l2 -pix_fmt yuv420p /dev/video2
+}
+
+screenrecord() {
+  ffmpeg -f x11grab -video_size 1920x1080 -framerate 25  -i :0.0+100,200 -f alsa -ac 2 -i pulse -acodec aac -strict experimental ~/Videos/screenrecording-$(date -Is).mkv
 }
 
 mdman() {
@@ -294,4 +319,36 @@ brightness() {
 
 epochtodate() {
   date --date=@$1
+}
+
+mrplease() {
+# https://gitlab.oss.volvoc3.com/CONNCARSDK/argocd-infrastructure/-/merge_requests/45
+  # CHQ0AQHM3 # ccar-t-cm
+  # C0244QRHYF8 # oip-connectedvehicle-nonprod
+  TEMPLATE="Hi, <https://vcc-consumer-digital.slack.com/team/U036G1J956K|@pthorin> here - Could you please look at this MR? $1 :gratitude-thank-you:"
+  JSON_STRING=$(jq -n --arg MSG "$TEMPLATE" '{"link_names":true,"parse":"full","channel":"CHQ0AQHM3","blocks":[{"type":"section","text":{"type":"mrkdwn","text": $MSG}}]}')
+  #JSON_STRING=$(jq -n --arg MSG "$TEMPLATE" '{"link_names":true,"parse":"full","channel":"C0244QRHYF8","text": $MSG}')
+  curl -H "Content-type: application/json" -d $JSON_STRING -H "Authorization: Bearer $MR_PLEASE_SLACK_TOKEN" -X POST https://slack.com/api/chat.postMessage
+}
+
+
+# SSL
+ssl_checkcsr() {
+  openssl req -text -noout -verify -in $@
+}
+ssl_createcsrfromp12() {
+  echo " openssl x509 -x509toreq  -copy_extensions copyall -in $1.crt -signkey $1.key -out $1.csr"
+}
+
+ssl_exportkeytoolkeystore() {
+  echo "keytool -importkeystore -srckeystore $1.jks -destkeystore $1.p12 -deststoretype PKCS12 -srcalias $1"
+  echo "openssl pkcs12 -in $1.p12 -nokeys -out $1.crt
+"
+  echo "openssl pkcs12 -in $1.p12 -nodes -nocerts -out $1.key"
+}
+
+
+# ag hilite
+aghilite() {
+  ag "\"$1\":\".+?\""
 }

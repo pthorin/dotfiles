@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-compton --config $HOME/.config/compton/compton.conf -b &
+#compton --config $HOME/.config/compton/compton.conf -b &
 transset --name i3bar &
 $HOME/.fehbg &
 nm-applet &

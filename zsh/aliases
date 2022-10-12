@@ -1,8 +1,11 @@
 alias zshconfig="$EDITOR ~/.zshrc"
 alias ohmyzsh="$EDITOR ~/.oh-my-zsh"
 # git 
+alias ghs='gh status -e volvo-cars/cdls-consumer,volvo-cars/cdls-mono-volvocars'
 alias ga='git add'
+alias gau='git add -u'
 alias gd='git diff'
+alias gds'git diff --staged'
 alias amend='git commit --amend'
 alias gamend='git commit --amend'
 alias gam='git commit --amend'
@@ -21,18 +24,20 @@ alias gcane='git commit --amend --no-edit'
 alias gco='git checkout'
 alias gcob='git cob'
 alias ghclone='gh_clone_volvo'
+alias gru="git rebase -i @{u}"
 alias lg='lazygit'
 # kubectl
 alias kc='kubecolor'
-alias kca='kubecolor apply -f'
-alias kcp='kubecolor get pods'
-alias kcu='kubecolor config use-context'
-kns() {
-  kubecolor config set-context --current --namespace="$1"
-}
+alias kca='kc apply -f'
+alias kcp='kc get pods --label-columns app'
+alias kcdp='kc describe pods'
+alias kcd='kc describe'
+alias kcu='kc config use-context'
+alias kns='kubens'
 alias kec='kubecolor config view --minify=true --flatten --context'
 alias vkcp='watch -n 1 kubecolor get pods'
 alias agenda='date ; gcalcli agenda $(date -I) $(date -I --date tomorrow) --details end --military'
+alias calw='gcalcli calw --military'
 
 alias cw='circle watch'
 alias i3config='vim ~/.config/i3/config'
@@ -42,6 +47,7 @@ alias editfunctions='vim ~/repos/dotfiles/zsh/functions'
 alias reloadzshrc='source ~/.zshrc'
 alias reloadfunctions='source ~/repos/dotfiles/zsh/functions'
 alias reloadaliases='source ~/repos/dotfiles/zsh/aliases'
+alias reloadvolvo='source ~/repos/volvoalias/gh'
 # less is more
 # alias less='less -N -i -J'
 alias more='less'
@@ -110,3 +116,4 @@ alias mvnup='mvn versions:update-properties -DgenerateBackupPoms=false'
 alias mvnfmt='mvn com.spotify.fmt:fmt-maven-plugin:format'
 alias mvnbump='mvn versions:set -DgenerateBackupPoms=false'
 alias=installgo='curl -L https://go.dev/dl/go1.18.linux-amd64.tar.gz -o - | tar xzf - -C /usr/local/'
+

@@ -1,9 +1,9 @@
 #!/bin/bash
 
 add_ppas () {
-  sudo add-apt-repository ppa:neovim-ppa/stable
-  echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
-  sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823
+  # sudo add-apt-repository ppa:neovim-ppa/stable
+  # echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
+  # sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823
 
   # Signal
   curl -s https://updates.signal.org/desktop/apt/keys.asc | sudo apt-key add -
@@ -15,19 +15,20 @@ add_ppas () {
 install_stuff () {
   sudo apt-get install -y \
     powertop \
+    imagemagick \
     xbacklight \
     xautolock \
     compton \
     i3 \
     display-dhammapada \
     curl \
-    ctags \
+    exuberant-ctags \
     git \
     neovim \
     mutt \
     pandoc \
     w3m w3m-img \
-    signal-desktop \
+    #signal-desktop \
     xclip \
     source-highlight \
     playerctl

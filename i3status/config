@@ -16,7 +16,7 @@ general {
 
 order += "read_file weeknumber"
 order += "read_file agenda"
-order += "load"
+# order += "load"
 order += "cpu_usage"
 #order += "ipv6"
 #order += "disk /"

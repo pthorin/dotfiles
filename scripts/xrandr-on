@@ -1,10 +1,14 @@
 #!/bin/sh
 
-if [ "$(xrandr | ag 'DP-6 connected' | wc -l)" -gt 0 ]; then
-  xrandr --output DP-6 --auto
-fi
-if [ "$(xrandr |ag 'DP-4 connected' | wc -l)" -gt 0 ]; then
-  xrandr --output DP-4 --auto --above DP-6 --primary
-fi
+xrandr --auto
+xrandr --output eDP-1 --auto --scale 2
+xrandr --output HDMI-1 --scale 2
+# internal="eDP-1"
+# if [ "$(xrandr | ag "$internal connected" | wc -l)" -gt 0 ]; then
+#   xrandr --output $internal --auto --scale 1.5
+# fi
+# if [ "$(xrandr |ag 'DP-3 connected' | wc -l)" -gt 0 ]; then
+#   xrandr --output DP-3 --auto --above $internal --primary
+# fi
 "$HOME/.fehbg"
 

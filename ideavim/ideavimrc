@@ -79,3 +79,7 @@ vnoremap <leader>d "_d
 " replace currently selected text with default register
 " without yanking it
 vnoremap <leader>p "_dP"
+
+sethandler <C-C> n-v:ide i:vim
+sethandler <C-N> n-v:ide i:vim
+sethandler <C-P> ide
