@@ -1,0 +1,37 @@
+#!/bin/bash
+set -euo pipefail
+gh api graphql -F owner='{owner}' -F name='{repo}' -f query='
+query($name: String!, $owner: String!) {
+  repository(name: $name, owner: $owner) {
+    vulnerabilityAlerts(first: 100) {
+      nodes {
+        createdAt
+        fixedAt
+        dismissedAt
+        securityVulnerability {
+          package {
+            name
+          }
+          advisory {
+            description
+          }
+        }
+      }
+    }
+  }
+}
+' -t '
+{{ range .data.repository.vulnerabilityAlerts.nodes }}
+
+  {{ if .fixedAt }}
+  {{ else }}
+
+  # {{ .securityVulnerability.package.name }}
+
+
+  {{ .securityVulnerability.advisory.description }}
+
+  {{ end }}
+{{ end }}
+
+' | glow -
