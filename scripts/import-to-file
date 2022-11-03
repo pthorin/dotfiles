@@ -2,4 +2,9 @@
 if ! [ -d "${HOME}"/Pictures/Screenshots ]; then
   mkdir -p "${HOME}"/Pictures/Screenshots
 fi
+if [ "$(pgrep -x -c i3)" -gt 0 ]; then
 import png:"${HOME}"/Pictures/Screenshots/"$(date -Iseconds)".png
+fi
+if [ "$(pgrep -x -c sway)" -gt 0 ]; then
+  slurp |grim -g - "${HOME}"/Pictures/Screenshots/"$(date -Iseconds)".png
+fi
