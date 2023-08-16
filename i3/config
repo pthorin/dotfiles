@@ -229,7 +229,7 @@ client.background       #ffffff
 #new_window none
 default_border none
 #new_float normal
-default_floating_border none
+default_floating_border normal
 
 # Lock screen
 bindsym Ctrl+Mod1+l exec --no-startup-id $home/scripts/fuzz
@@ -254,6 +254,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id brightness-down # decrease sc
 # Media player controls
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioPause exec --no-startup-id playerctl pause
+bindsym Pause exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym --release Ctrl+Print exec --no-startup-id $home/scripts/import-to-clipboard
@@ -271,13 +272,13 @@ bindsym $mod+Shift+minus move scratchpad
 for_window [title="^Spotify"] mark "music" #, move scratchpad
 # for_window [title="^Slack"] move scratchpad
 for_window [title="^Signal"] move scratchpad
-for_window [title="^Riot"] move scratchpad
-for_window [title="^Element"] move scratchpad
+# for_window [title="^Riot"] move scratchpad
+# for_window [title="^Element"] move scratchpad
 for_window [title=".*Discord$"] move scratchpad
 # for_window [title=".*Teams$"] move scratchpad
 bindsym $mod+comma [con_mark="music"] scratchpad show
 # bindsym F12 [con_mark="music"] scratchpad show
-bindsym $mod+period [title="^Slack"] scratchpad show
+bindsym $mod+period [title=".+?- Slack$"] scratchpad show
 bindsym $mod+t [title=".*Teams$"] scratchpad show
 # bindsym F9 [title="^Slack"] scratchpad show
 bindsym $mod+i [title="^Signal"] scratchpad show
@@ -287,7 +288,14 @@ bindsym $mod+o [title=".*Discord$"] scratchpad show
 bindsym $mod+Shift+comma [title="^Element"] scratchpad show
 bindsym $mod+Shift+w [title=".*1Password$"] scratchpad show
 for_window [title="^JetBrains Toolbox"] floating enable
+for_window [title="^Volume Control$"] floating enable
+for_window [title="^Volume Control$"] border pixel 1
+
+for_window [title="^Bluetooth Devices$"] floating enable
+for_window [title="^Bluetooth Devices$"] border pixel 1
 for_window [title="^SimpleScreenRecorder"] floating enable
+for_window [title="^Slack.+?- Huddle$"] border pixel 1
+for_window [title="^Slack.+?- Huddle$"] floating enable
 #for_window [title="emote"] floating enable
 # Show the first scratchpad window
 bindsym $mod+minus scratchpad show

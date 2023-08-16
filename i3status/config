@@ -14,8 +14,9 @@ general {
   color_degraded = "#FFC300"
 }
 
+#order += "read_file bigip"
 order += "read_file weeknumber"
-order += "read_file agenda"
+# order += "read_file agenda"
 # order += "load"
 order += "cpu_usage"
 #order += "ipv6"
@@ -83,4 +84,11 @@ read_file weeknumber {
   path = "/tmp/weeknumber"
   align = "left"
   format = "Week: %content"
+}
+
+read_file bigip {
+  color_good = "#faaace"
+  path = "/tmp/bigip"
+  align = "left"
+  format = "BIGIP: %content"
 }

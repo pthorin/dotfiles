@@ -134,7 +134,7 @@ source ~/.zecrets > /dev/null
 
 
 export CODE_PATH=~/repos
-export CDPATH=.:~:~/repos:~/repos/azure:~/repos/gitlab
+export CDPATH=.:~:~/repos:~/repos/connected-vehicle/:~/repos/extended-vehicle:~/energy:~/repos/ash:~/repos/azure:~/repos/gitlab
 
 # Tiny Care Terminal
 #export TTC_BOTS='honest_update,dmofengineering,selfcare_bot'
@@ -191,6 +191,12 @@ if [[ ! -d "$ZSH/completions" || ! -f "$ZSH/completions/_gh" ]]; then
     echo "gh added completions: gh completion --shell zsh > $ZSH/completions/_gh"
 fi
 
+if [[ ! -d "$ZSH/completions" || ! -f "$ZSH/completions/_glab" ]]; then
+    mkdir -pv $ZSH/completions
+    glab completion -s zsh > $ZSH/completions/_glab
+    echo "gh added completions: glab completion -s zsh > $ZSH/completions/_glab"
+fi
+
 # sdk complete
 function sdk() {
   unset -f sdk
@@ -208,10 +214,52 @@ unsetopt auto_cd
 export HELPDIR='/usr/share/zsh/help'
 alias help='run-help'
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-
+eval "$(op completion zsh)"; compdef _op op
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
+
+if [ -x $(which lolcat) ]; then
+  if [ -x $(which display-dhammapada) ]; then display-dhammapada | lolcat -a; fi
+elif [ -x $(which display-dhammapada) ]; then display-dhammapada; fi
+
+# REVIEW_BASE for git review and git reviewone
+REVIEW_BASE=main
+
+
+# pomodoro
+# study stream aliases
+# Requires https://github.com/caarlos0/timer to be installed. spd-say should ship with your distro
+
+declare -A pomo_options
+pomo_options["work"]="25"
+pomo_options["break"]="5"
+
+pomodoro () {
+  if [ -n "$1" -a -n "${pomo_options["$1"]}" ]; then
+  val=$1
+  echo $val | lolcat
+  timer -f ${pomo_options["$val"]}m
+  say "'$val' session done"
+  notify-send "'$val' session done"
+  fi
+}
+
+cycle_work_break(){
+    for i in $(seq $1); do
+        pomodoro 'work'
+        pomodoro 'break'
+    done
+}
+
+alias work="pomodoro 'work'"
+alias br="pomodoro 'break'"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+
+
+

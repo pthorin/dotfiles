@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
-#compton --config $HOME/.config/compton/compton.conf -b &
+compton --config $HOME/.config/compton/compton.conf -b -i 0.75 &
 transset --name i3bar &
+lxpolkit &
 $HOME/.fehbg &
 nm-applet &
 setxkbmap -option caps:escape &
@@ -11,4 +12,5 @@ signal-desktop &
 sudo openvpn --config ~/ovpn/PTHORIN@vpn.oss.volvoc3.com.ovpn --daemon &
 dunst &
 workrave &
-blueman-manager &
+blueman-applet &
+gnome-pomodoro &

@@ -24,6 +24,7 @@ query($name: String!, $owner: String!) {
 {{ range .data.repository.vulnerabilityAlerts.nodes }}
 
   {{ if .fixedAt }}
+  {{ else if .dismissedAt }}
   {{ else }}
 
   # {{ .securityVulnerability.package.name }}

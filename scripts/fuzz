@@ -1,17 +1,36 @@
 #!/bin/bash
-revert() {
-  # rm /tmp/*screen*.png
-  xset dpms 0 0 0
-  killall -SIGUSR2 dunst # Resume
-}
-killall -SIGUSR1 dunst # Pause
-playerctl pause
-trap revert HUP INT TERM
-#import -window root /tmp/locking_screen.png
-#convert -blur 0x8 /tmp/locking_screen.png /tmp/screen_blur.png
-##convert -composite /tmp/screen_blur.png ~/Pictures/guldhedsparken.jpg /tmp/screen.png
-#rm /tmp/locking_screen.png
-#cp /tmp/screen_blur.png /tmp/screen.png
-xset +dpms dpms 5 5 5
-i3lock -n -c 111111 -i /home/pthorin/.local/share/backgrounds/lock.png
-revert
+if pgrep -x -c i3; then
+  revert() {
+    # rm /tmp/*screen*.png
+    xset dpms 0 0 0
+    killall -SIGUSR2 dunst # Resume
+  }
+  killall -SIGUSR1 dunst # Pause
+  playerctl pause
+  trap revert HUP INT TERM
+  #import -window root /tmp/locking_screen.png
+  #convert -blur 0x8 /tmp/locking_screen.png /tmp/screen_blur.png
+  ##convert -composite /tmp/screen_blur.png ~/Pictures/guldhedsparken.jpg /tmp/screen.png
+  #rm /tmp/locking_screen.png
+  #cp /tmp/screen_blur.png /tmp/screen.png
+  xset +dpms dpms 5 5 5
+  i3lock -n -c 111111 -i /home/pthorin/.local/share/backgrounds/lock.png
+  revert
+elif pgrep -x -c sway; then
+  revert() {
+    # rm /tmp/*screen*.png
+    swaymsg "output * dpms on"
+    killall -SIGUSR2 dunst # Resume
+  }
+  killall -SIGUSR1 dunst # Pause
+  playerctl pause
+  trap revert HUP INT TERM
+  #import -window root /tmp/locking_screen.png
+  #convert -blur 0x8 /tmp/locking_screen.png /tmp/screen_blur.png
+  ##convert -composite /tmp/screen_blur.png ~/Pictures/guldhedsparken.jpg /tmp/screen.png
+  #rm /tmp/locking_screen.png
+  #cp /tmp/screen_blur.png /tmp/screen.png
+  swaymsg "output * dpms off"
+  swaylock -c 11111105 -i /home/pthorin/.local/share/backgrounds/lock.png
+  revert
+fi

@@ -1,7 +1,7 @@
 #!/bin/sh
-if [ "$(pgrep -x -c i3)" -gt 0 ]; then
-  import png:- | xclip -select c -t image/png
-fi
-if [ "$(pgrep -x -c sway)" -gt 0 ]; then
-  slurp |grim -g - - |wl-copy
-fi
+# if [ "$(pgrep -x -c i3)" -gt 0 ]; then
+import png:- | xclip -select c -t image/png
+# fi
+# if [ "$(pgrep -x -c sway)" -gt 0 ]; then
+#   slurp |grim -g - - |wl-copy
+# fi

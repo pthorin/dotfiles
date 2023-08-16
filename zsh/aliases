@@ -1,7 +1,8 @@
 alias zshconfig="$EDITOR ~/.zshrc"
 alias ohmyzsh="$EDITOR ~/.oh-my-zsh"
+alias bat='batcat'
 # git 
-alias ghs='gh status -e volvo-cars/cdls-consumer,volvo-cars/cdls-mono-volvocars'
+alias ghs='gh status -e volvo-cars/cdls-consumer,volvo-cars/cdls-mono-volvocars,volvo-cars/dcb-architecture-documentation'
 alias ga='git add'
 alias gau='git add -u'
 alias gd='git diff'
@@ -24,16 +25,23 @@ alias gcane='git commit --amend --no-edit'
 alias gco='git checkout'
 alias gcob='git cob'
 alias ghclone='gh_clone_volvo'
+alias automerge='gh pr merge --squash --auto'
 alias gru="git rebase -i @{u}"
 alias lg='lazygit'
 # kubectl
 alias kc='kubecolor'
 alias kca='kc apply -f'
 alias kcp='kc get pods --label-columns app'
+alias kcd='kc get deployments --label-columns app'
 alias kcdp='kc describe pods'
 alias kcd='kc describe'
 alias kcu='kc config use-context'
 alias kns='kubens'
+alias knsc='kubens -c'
+alias knsext='kubens public--public-apis--ext-vehicle'
+alias knscon='kubens public--public-apis--conn-vehicle'
+alias knsoip='kubens public--public-apis--oipgateway'
+alias knspol='kubens public-apis--polestar--conn-vehicle'
 alias kec='kubecolor config view --minify=true --flatten --context'
 alias vkcp='watch -n 1 kubecolor get pods'
 alias agenda='date ; gcalcli agenda $(date -I) $(date -I --date tomorrow) --details end --military'
@@ -41,6 +49,7 @@ alias calw='gcalcli calw --military'
 
 alias cw='circle watch'
 alias i3config='vim ~/.config/i3/config'
+alias swayconfig='vim ~/.config/sway/config'
 alias editaliases='vim ~/repos/dotfiles/zsh/aliases'
 alias editfunctions='vim ~/repos/dotfiles/zsh/functions'
 
@@ -61,7 +70,9 @@ alias gitmoji="docker run --rm -it gitmoji-cli"
 alias week='gcalcli --calendar Gemensam --calendar Volvo calw 1'
 alias gitvim="vim -c 'Git |wincmd o' ."
 # copy paste
+#alias pbcopy='wl-copy' #'xclip -selection clipboard'
 alias pbcopy='xclip -selection clipboard'
+#alias pbpaste='wl-paste' #'xclip -selection clipboard -o'
 alias pbpaste='xclip -selection clipboard -o'
 # hub
 alias hi='hub issue'
@@ -110,10 +121,12 @@ alias mongodb="docker run --name mongodb \
     -d mongo:latest"
 
 # maven
-alias mvnddu='mvn versions:display-dependency-updates'
-alias mvndpu='mvn versions:display-property-updates'
-alias mvnup='mvn versions:update-properties -DgenerateBackupPoms=false'
-alias mvnfmt='mvn com.spotify.fmt:fmt-maven-plugin:format'
+alias mvnddu='mvn versions:display-dependency-updates -Dorg.slf4j.simpleLogger.log.org.codehaus.mojo.versions.DisplayPropertyUpdatesMojo=info --quiet'
+alias mvndpu='mvn versions:display-property-updates -Dorg.slf4j.simpleLogger.log.org.codehaus.mojo.versions.DisplayPropertyUpdatesMojo=info --quiet'
+alias mvnup='mvn versions:update-properties -DgenerateBackupPoms=false -Dorg.slf4j.simpleLogger.log.org.codehaus.mojo.versions.DisplayPropertyUpdatesMojo=info --quiet'
+alias mvnfmt='mvn com.spotify.fmt:fmt-maven-plugin:format --quiet'
 alias mvnbump='mvn versions:set -DgenerateBackupPoms=false'
-alias=installgo='curl -L https://go.dev/dl/go1.18.linux-amd64.tar.gz -o - | tar xzf - -C /usr/local/'
+alias installgo='curl -L https://go.dev/dl/go1.18.linux-amd64.tar.gz -o - | tar xzf - -C /usr/local/'
 
+# op
+alias vaultgithubtoken='op item get wib6ejzqpzg5aizmpnqgwkyzj4 --field password'

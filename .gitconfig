@@ -8,6 +8,7 @@
   lminimal = log --graph --decorate --pretty=oneline --all
   lm = lminimal
   lsg = log --graph --decorate --all
+  lsf = log --graph --decorate --all --format=full
   lsp = log --graph --decorate --format=short --all -p
   last = log -1
   st = status --short --branch
@@ -15,6 +16,7 @@
   ec = config --global -e
   up = !git pull --rebase --prune $@
   upa = !git pull --rebase --prune --autostash $@
+  upd = "!git pull --rebase --prune origin $(git default)"
   cob = checkout -b
   save = !git add -A && git commit -m 'SAVEPOINT'
   wip = commit -am "WIP"
@@ -26,9 +28,10 @@
   #default = "!git remote show origin|grep --only-matching -E 'HEAD branch: .+?$' " ; |sed -n '{ s@HEAD branch: \(\.+\)$@\1@p }'"
   #defaultx = "!git remote show origin|grep --only-matching -E 'HEAD branch: .+?$' |sed -n 's/HEAD branch: //p '"
   default = "!git remote show origin|awk '/HEAD branch: /{print $NF}'"
-
+#   parpar = "!f() { git show-branch | sed 's/].*//' | grep '\*' | grep -v '$(git rev-parse --abbrev-ref HEAD)' | head -n1 | sed 's/^.*\[//' | sed 's/\^//'}; f"
   bclean = "!f() { DEFAULT=$(git default) ; git checkout ${1-$DEFAULT} && git branch --merged ${1-$DEFAULT} | grep -v " ${1-$DEFAULT}$" | xargs git branch -d; }; f"
-  bdone = "!f() { DEFAULT=$(git default) ; git checkout ${1-DEFAULT} && git up && git bclean ${1-$DEFAULT}; }; f"
+  bdone = "!f() { DEFAULT=$(git default) ; git checkout ${1-$DEFAULT} && git up && git bclean ${1-$DEFAULT}; }; f"
+#  squashdone = "!f() { DEFAULT=$(git default) ; git checkout -q ${1-$DEFAULT} && git for-each-ref refs/heads/ "--format=%(refname:short)" | while read branch; do mergeBase=$(git merge-base ${1-$DEFAULT} $branch) && [[ $(git cherry ${1-$DEFAULT} $(git commit-tree $(git rev-parse "$branch^{tree}") -p $mergeBase -m _)) == "-"* ]] && echo "$branch is merged into master and can be deleted"; done; }; f"
   # rebdone = "!f() { git checkout master && git up && git checkout $1 && git rebase master && if [ $(git need-rebase) -eq 1 ]; then git rebase master ; fi && git bdone }; f"
   clean-branches ="!f() { git checkout main && git up && git branch --list |grep -v " main$" | xargs git branch -d; }; f"
   clean-master-branches ="!f() { git checkout master && git up && git branch --list |grep -v " master$" | xargs git branch -d; }; f"
@@ -45,6 +48,18 @@
   documentation = "!f() { git show $(git blame $1 -L $2,$2 |awk '{print $1}') }; f"
   renametomain = "!f() { git fetch --all ; git remote set-head origin -a ; git branch --set-upstream-to origin/main ; git branch -m master main ; }; f"
 	delete-squashed = "!git-delete-squashed"
+
+  files = !git diff --name-only $(git merge-base HEAD $REVIEW_BASE)
+
+  # Open all files changed since REVIEW_BASE in Vim tabs
+  # Then, run fugitive's :Gdiff in each tab, and finally
+  # tell vim-gitgutter to show +/- for changes since REVIEW_BASE
+  review = !vim -p $(git files) +\"tabdo Gdiff $REVIEW_BASE\" +\"let g:gitgutter_diff_base = '$REVIEW_BASE'\"
+
+   # Same as the above, except specify names of files as arguments,
+  # instead of opening all files:
+  # git reviewone foo.js bar.js
+  reviewone = !vim -p +\"tabdo Gdiff $REVIEW_BASE\" +\"let g:gitgutter_diff_base = '$REVIEW_BASE'\"
 
 [push]
 	default = current
@@ -63,6 +78,7 @@
 	defaultBranch = main
 [core]
 	autocrlf = input
+	excludesFile = ~/.gitignore
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -73,3 +89,5 @@
 	helper = /usr/local/share/gcm-core/git-credential-manager-core
 [credential "https://dev.azure.com"]
 	useHttpPath = true
+[credential "https://gitlab.oss.volvoc3.com"]
+	provider = gitlab

@@ -15,6 +15,12 @@ update_changelog_gh() {
 
 }
 
+wtfmaventest() {
+  cat << EOF
+  mvn test -Dtest="TheSecondUnitTest#whenTestCase1*"
+EOF
+}
+
 wtfpipeoutput () {
   # TLDR on stdout / stderr
   cat << EOF
@@ -144,6 +150,15 @@ browsh() {
 }
 dryconflict() {
   git merge-tree "$(git merge-base "$2" "$1")" "$2" "$1" | ag '^\<+ \.our$'
+}
+
+git-exclude-untracked() {
+  git st --untracked-files=normal |ag -Q "?? " |cut -d" " -f2 | tee -a .git/info/exclude
+}
+
+
+git-ignore-untracked() {
+  git st --untracked-files=normal |ag -Q "?? " |cut -d" " -f2 | tee -a .gitignore
 }
 
 showmethecolors() {
@@ -279,7 +294,7 @@ update_starship() {
   cd - || exit
 }
 
-git-delete-squashed() { local targetBranch=${1:-main} && git checkout -q $targetBranch && git branch --merged | grep -v "\*" | xargs -n 1 --no-run-if-empty git branch -d && git for-each-ref refs/heads/ "--format=%(refname:short)" | while read branch; do mergeBase=$(git merge-base $targetBranch $branch) && [[ $(git cherry $targetBranch $(git commit-tree $(git rev-parse $branch^{tree}) -p $mergeBase -m _)) == "-"* ]] && git branch -D $branch; done; }
+git-delete-squashed() { local DEFAULT=$(git default) ; local targetBranch=${1:-$DEFAULT} && git checkout -q $targetBranch && git branch --merged | grep -v "\*" | xargs -n 1 --no-run-if-empty git branch -d && git for-each-ref refs/heads/ "--format=%(refname:short)" | while read branch; do mergeBase=$(git merge-base $targetBranch $branch) && [[ $(git cherry $targetBranch $(git commit-tree $(git rev-parse $branch^{tree}) -p $mergeBase -m _)) == "-"* ]] && git branch -D $branch; done; }
 
 
 streamwebcam() {
@@ -322,9 +337,6 @@ epochtodate() {
 }
 
 mrplease() {
-# https://gitlab.oss.volvoc3.com/CONNCARSDK/argocd-infrastructure/-/merge_requests/45
-  # CHQ0AQHM3 # ccar-t-cm
-  # C0244QRHYF8 # oip-connectedvehicle-nonprod
   TEMPLATE="Hi, <https://vcc-consumer-digital.slack.com/team/U036G1J956K|@pthorin> here - Could you please look at this MR? $1 :gratitude-thank-you:"
   JSON_STRING=$(jq -n --arg MSG "$TEMPLATE" '{"link_names":true,"parse":"full","channel":"CHQ0AQHM3","blocks":[{"type":"section","text":{"type":"mrkdwn","text": $MSG}}]}')
   #JSON_STRING=$(jq -n --arg MSG "$TEMPLATE" '{"link_names":true,"parse":"full","channel":"C0244QRHYF8","text": $MSG}')
@@ -351,4 +363,39 @@ ssl_exportkeytoolkeystore() {
 # ag hilite
 aghilite() {
   ag "\"$1\":\".+?\""
+}
+
+wtfmicroplane() {
+cat << EOF
+# Init => Clone => Plan => Push => Merge
+microplane init "org:mp-test go1.8"
+microplane clone
+microplane status
+microplane plan -b go1.9 -m "Golang 1.9 upgrade" -- sed -i 's/1.8/1.9/g' circle.yml
+microplane push -a @me
+microplane status
+microplane merge
+EOF
+}
+
+bwsearchitem() {
+  bw get item $(bw list items --search $1 |jq --raw-output '.[]|.id')
+}
+
+fds() {
+  preview="git diff $@ --color=always -- {-1}"
+  git diff $@ --name-only | fzf -m --ansi --preview $preview
+}
+
+fds() {
+  preview="git diff $@ --staged --color=always -- {-1}"
+  git diff $@ --staged --name-only | fzf -m --ansi --preview $preview
+}
+
+kcimage() {
+  kc describe pods $@ |ag Image:
+}
+
+ghcopyurl() {
+  gh pr view --json url |jq --raw-output ".url" |pbcopy && echo "Copied url to clipboard"
 }

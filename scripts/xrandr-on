@@ -1,8 +1,33 @@
-#!/bin/sh
+#!/bin/bash
+set -euox pipefail
 
-xrandr --auto
-xrandr --output eDP-1 --auto --scale 2
-xrandr --output HDMI-1 --scale 2
+#xrandr --auto
+#xrandr --output eDP-1 --auto --scale 2
+#xrandr --output HDMI-1 --scale 2
+
+isOn() {
+  eval xrandr |ag -Q "*" -B1 |ag "$1" |wc -l
+}
+
+toggle() {
+  if [[ $(isOn "$1") -eq 1 ]]
+  then
+    xrandr --output "$1" --off
+  else
+    xrandr --output "$@" --auto --scale 2
+  fi
+}
+
+if [[ $(isOn "DP-3") -eq 1 ]]
+then
+  xrandr --output DP-3 --scale 1
+  toggle eDP-1 --below DP-3
+else
+  toggle eDP-1
+fi
+
+
+#xrandr --output eDP-1 --scale 1.7 --auto --output DP-3 --scale 1 --above eDP-1
 # internal="eDP-1"
 # if [ "$(xrandr | ag "$internal connected" | wc -l)" -gt 0 ]; then
 #   xrandr --output $internal --auto --scale 1.5
