@@ -194,7 +194,13 @@ fi
 if [[ ! -d "$ZSH/completions" || ! -f "$ZSH/completions/_glab" ]]; then
     mkdir -pv $ZSH/completions
     glab completion -s zsh > $ZSH/completions/_glab
-    echo "gh added completions: glab completion -s zsh > $ZSH/completions/_glab"
+    echo "glab added completions: glab completion -s zsh > $ZSH/completions/_glab"
+fi
+
+if [[ ! -d "$ZSH/completions" || ! -f "$ZSH/completions/_ctp" ]]; then
+    mkdir -pv $ZSH/completions
+    ctp completion zsh > $ZSH/completions/_ctp
+    echo "ctp added completions: ctp completion zsh > $ZSH/completions/_ctp"
 fi
 
 # sdk complete
