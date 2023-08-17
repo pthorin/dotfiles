@@ -226,7 +226,7 @@ autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
 
 if [ -x $(which lolcat) ]; then
-  if [ -x $(which display-dhammapada) ]; then display-dhammapada | lolcat -a; fi
+  if [ -x $(which display-dhammapada) ]; then display-dhammapada | lolcat --animate; fi
 elif [ -x $(which display-dhammapada) ]; then display-dhammapada; fi
 
 # REVIEW_BASE for git review and git reviewone
