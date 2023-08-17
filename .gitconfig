@@ -77,8 +77,9 @@
 [init]
 	defaultBranch = main
 [core]
-	autocrlf = input
-	excludesFile = ~/.gitignore
+  autocrlf = input
+  excludesFile = ~/.gitignore
+  pager = batcat
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f

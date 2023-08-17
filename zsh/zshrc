@@ -261,6 +261,8 @@ cycle_work_break(){
 alias work="pomodoro 'work'"
 alias br="pomodoro 'break'"
 
+BAT_THEME="Catppuccin-mocha"
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 
