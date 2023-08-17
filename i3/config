@@ -245,8 +245,8 @@ set $crust     #11111b
     ## semi-hand made catppuccin mocha
     background $base
     statusline $text
-    separator $overlay0
-    focused_workspace  $base   $rosewater  $base
+    separator $surface0
+    focused_workspace  $base   $sapphire  $base
     active_workspace   $base   $pink       $base
     inactive_workspace $base   $base       $text
     urgent_workspace   $peach  $peach      $base
