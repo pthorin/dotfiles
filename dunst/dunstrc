@@ -1,8 +1,10 @@
 # Copy or link to .config/dunst/dunstrc
+
 [global]
     font = Sans 12
     frame_width = 3
-    frame_color = "#BB5599"
+    frame_color = "#89B4FA"
+    separator_color= frame
 
 # Allow a small subset of html markup:
 #   <b>bold</b>
@@ -176,18 +178,21 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#222222"
-    foreground = "#888888"
     timeout = 0
+    background = "#1E1E2E"
+    foreground = "#CDD6F4"
+
+
 
 [urgency_normal]
-    background = "#BB5599"
-    foreground = "#ffffff"
     timeout = 0
+    background = "#1E1E2E"
+    foreground = "#CDD6F4"
 
 [urgency_critical]
-    background = "#F48FB1"
-    foreground = "#ffffff"
+    background = "#1E1E2E"
+    foreground = "#CDD6F4"
+    frame_color = "#FAB387"
     timeout = 0
 
 
