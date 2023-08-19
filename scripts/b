@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+#
+# Search and open chrome bookmarks from your terminal
+#
+# Open interactive search:
+# $ b
+#
+# Open first fuzzy matching bookmark:
+# $ b <query string>
+#
+
+set -euo pipefail
+
+# This is where chrome bookmarks are stored on OSX, needs adjustment on other platforms.
+if [ -f "$HOME/Library/Application Support/Google/Chrome/Default/Bookmarks" ]; then
+  BOOKMARKS="$HOME/Library/Application Support/Google/Chrome/Default/Bookmarks"
+elif [ -f "$HOME/.config/google-chrome/Default/Bookmarks" ]; then
+  BOOKMARKS="$HOME/.config/google-chrome/Default/Bookmarks"
+fi
+
+if ! [ -x "$(command -v fzf)" ]; then
+    echo "fzf is not installed"
+    exit 1
+fi
+
+if ! [ -x "$(command -v jq)" ]; then
+    echo "jq is not installed"
+    exit 1
+fi
+
+_bookmarks() {
+    #cat "$BOOKMARKS" | jq -r '.roots[] | recurse(.children?[]?) | select(.url!=null) | "\(.name) (\(.url?))"'
+    jq -r '.roots[] | recurse(.children?[]?) | select(.url!=null) | "\(.name) (\(.url?))"' "$BOOKMARKS"
+}
+
+main() {
+    local f
+    [ -z "$@" ] || f="-f $@"
+    #url=$(_bookmarks | fzf --history=$HOME/.goto.history --prompt="Search bookmark > " $f | head -1 | sed -n 's/[^(]*(\(http[^)]*\).*/\1/p')
+    url=$(_bookmarks | fzf --history=$HOME/.goto.history --prompt="Search bookmark > " | head -1 | sed -n 's/[^(]*(\(http[^)]*\).*/\1/p')
+    echo "$url"
+    [ -z "$url" ] || open "$url"
+}
+
+main $*
