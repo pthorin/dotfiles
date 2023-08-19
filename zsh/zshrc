@@ -101,6 +101,7 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH=$PATH:./node_modules/.bin
 export PATH=$PATH:~/repos/docker-bin
 export PATH=$PATH:/usr/local/bin/kui
+export PATH=$PATH:~/.cargo/bin
 
 if (( ! ${fpath[(I)/usr/local/share/zsh/site-functions]} )); then
   FPATH=/usr/local/share/zsh/site-functions:$FPATH
@@ -225,9 +226,9 @@ eval "$(op completion zsh)"; compdef _op op
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
 
-if [ -x $(which lolcat) ]; then
-  if [ -x $(which display-dhammapada) ]; then display-dhammapada | lolcat --animate; fi
-elif [ -x $(which display-dhammapada) ]; then display-dhammapada; fi
+if [ -x $(which lolcat) ] && [ -x $(which fortune) ]; then
+  fortune ~/repos/dotfiles/breathe |lolcat --animate
+fi
 
 # REVIEW_BASE for git review and git reviewone
 REVIEW_BASE=main

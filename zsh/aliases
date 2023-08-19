@@ -52,6 +52,7 @@ alias i3config='vim ~/.config/i3/config'
 alias swayconfig='vim ~/.config/sway/config'
 alias editaliases='vim ~/repos/dotfiles/zsh/aliases'
 alias editfunctions='vim ~/repos/dotfiles/zsh/functions'
+alias batconfig='vim $(bat --config-file)'
 
 alias reloadzshrc='source ~/.zshrc'
 alias reloadfunctions='source ~/repos/dotfiles/zsh/functions'

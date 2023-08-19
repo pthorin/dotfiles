@@ -110,12 +110,13 @@ style = "bold lavender"
 # style = "bg:#86BBD8"
 # format = '[ $symbol ($version) ]($style)'
 
-# [java]
+[java]
+disabled = true
 # symbol = " "
 # style = "bg:#86BBD8"
 # format = '[ $symbol ($version) ]($style)'
 
-# [package]
+[package]
 # symbol = "📦 "
 # style = "bg:#86BBD8"
 # format = '[ $symbol($version) ]($style)'

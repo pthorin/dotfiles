@@ -15,6 +15,14 @@ update_changelog_gh() {
 
 }
 
+wtfnetwork() {
+  cat << EOF
+  fast     -  netflix speed test
+  cbm      -  color bandwidth meter
+  nethogs  -  which process is using the most bandwidth
+  nload    -  Real-Time internet traffic monitoring
+EOF
+}
 wtfmaventest() {
   cat << EOF
   mvn test -Dtest="TheSecondUnitTest#whenTestCase1*"
