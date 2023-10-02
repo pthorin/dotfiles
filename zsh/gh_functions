@@ -1,0 +1,66 @@
+reload-gh-functions () {
+  source ~/repos/dotfiles/zsh/gh_functions
+}
+
+IGNORE_REPOS="-repo:volvo-cars/cdls-mono-volvocars -repo:volvo-cars/cdls-consumer -repo:perlieadman/godwit -repo:kartena/Proj4Leaflet"
+gh-api-search-prs-involving-user() {
+  MYORG="$1"
+  USER="$2"
+  gh api -X GET "search/issues" \
+    -F per_page=100 --paginate \
+    -f q="is:open is:pr involves:$USER $IGNORE_REPOS" \
+    -t '
+    {{tablerow "PR" "TITLE" "URL" "CREATED AT"}}
+    {{ range .items }}
+    {{tablerow (printf "#%v" .number | autocolor "green") .title .html_url (timeago .created_at)}}
+    {{ end }}
+    {{tablerender}}
+    '
+    # --jq '.items[] | [.number, .title, .comments, .html_url] | @tsv'
+}
+
+gh-api-search-prs-review-requested-user() {
+  MYORG="$1"
+  USER="$2"
+  gh api -X GET "search/issues" \
+    -F per_page=100 --paginate \
+    -f q="is:open is:pr review-requested:pthorin -repo:volvo-cars/cdls-mono-volvocars -repo:volvo-cars/cdls-consumer" \
+    --jq '.items[] | [.number, .title, .comments, .html_url] | @tsv'
+}
+
+gh-api-search-issues-involving-user() {
+  MYORG="$1"
+  USER="$2"
+  gh api -X GET "search/issues" \
+    -F per_page=100 --paginate \
+    -f q="is:issue is:open involves:pthorin" \
+    --jq '.items[] | [.number, .title] | @tsv'
+}
+
+gh-api-search-issues-assigned-user() {
+  MYORG="$1"
+  USER="$2"
+  gh api -X GET "search/issues" \
+    -F per_page=100 --paginate \
+    -f q="is:issue is:open assignee:pthorin" \
+    --jq '.items[] | [.number, .title] | @tsv'
+}
+
+gh-api-search-issues-involving-team() {
+  MYORG="$1"
+  TEAM="$2"
+  gh api -X GET "search/issues" \
+    -F per_page=100 --paginate \
+    -f q="is:issue is:open $(team-involves $MYORG $TEAM)" \
+    --jq '.items[] | [.number, .title] | @tsv'
+}
+
+gh-api-search-issues-involving-team-and-repo() {
+  MYORG="$1"
+  REPO="$2"
+  TEAM="$3"
+  gh api -X GET search/issues \
+    -F per_page=100 --paginate \
+    -f q="repo:$MYORG/$REPO is:issue is:open $(team-involves $MYORG $TEAM)" \
+    --jq '.items[] | [.number, .title] | @tsv'
+}
