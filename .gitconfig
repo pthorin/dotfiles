@@ -11,6 +11,10 @@
   lsf = log --graph --decorate --all --format=full
   lsp = log --graph --decorate --format=short --all -p
   last = log -1
+  lasts = log -1 --stat
+  lastp = log -1 -p
+  lastsp = log -1 -p --stat
+  lastps = log -1 -p --stat
   st = status --short --branch
   co = checkout
   ec = config --global -e
@@ -92,3 +96,5 @@
 	useHttpPath = true
 [credential "https://gitlab.oss.volvoc3.com"]
 	provider = gitlab
+	gitLabDevClientId = $GITLAB_CLIENT_ID
+	gitLabDevClientSecret = $GITLAB_CLIENT_SECRET

@@ -86,6 +86,9 @@ source $ZSH/oh-my-zsh.sh
 autoload -U compinit && compinit
 compdef kubecolor=kubectl
 
+# RIPGREP config ripgrep
+RIPGREP_CONFIG_PATH=/home/pthorin/.config/ripgrep
+
 # User configuration
 export DEFAULT_USER=pthorin
 prompt_context(){}
@@ -97,8 +100,8 @@ export PATH=$PATH:~/.local/bin
 export PATH=$PATH:~/go/bin
 export PATH=$PATH:~/.gem/ruby/2.7.0/bin
 #export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/"
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-export PATH=$PATH:./node_modules/.bin
+# export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+#export PATH=$PATH:./node_modules/.bin
 export PATH=$PATH:~/repos/docker-bin
 export PATH=$PATH:/usr/local/bin/kui
 export PATH=$PATH:~/.cargo/bin
@@ -162,13 +165,14 @@ source ~/repos/volvoalias/azure
 source ~/repos/volvoalias/gh
 # Load functions
 source ~/repos/dotfiles/zsh/functions
+source ~/repos/dotfiles/zsh/gh_functions
 # Load mob settings
 source ~/repos/dotfiles/zsh/mob
 function aws() {
   unset -f aws
   if [ $commands[aws] ]; then
     # aws complete
-    complete -C '$(which aws_completer)' aws 
+    complete -C '$(which aws_completer)' aws
   fi
   aws $*
 }
@@ -215,7 +219,7 @@ unsetopt auto_cd
 # run profiler
 #zprof
 # direnv
-# eval "$(direnv hook zsh)"
+eval "$(direnv hook zsh)"
 
 # HELP!
 export HELPDIR='/usr/share/zsh/help'
@@ -233,34 +237,6 @@ fi
 # REVIEW_BASE for git review and git reviewone
 REVIEW_BASE=main
 
-
-# pomodoro
-# study stream aliases
-# Requires https://github.com/caarlos0/timer to be installed. spd-say should ship with your distro
-
-declare -A pomo_options
-pomo_options["work"]="25"
-pomo_options["break"]="5"
-
-pomodoro () {
-  if [ -n "$1" -a -n "${pomo_options["$1"]}" ]; then
-  val=$1
-  echo $val | lolcat
-  timer -f ${pomo_options["$val"]}m
-  say "'$val' session done"
-  notify-send "'$val' session done"
-  fi
-}
-
-cycle_work_break(){
-    for i in $(seq $1); do
-        pomodoro 'work'
-        pomodoro 'break'
-    done
-}
-
-alias work="pomodoro 'work'"
-alias br="pomodoro 'break'"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"

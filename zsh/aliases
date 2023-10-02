@@ -2,6 +2,7 @@ alias zshconfig="$EDITOR ~/.zshrc"
 alias ohmyzsh="$EDITOR ~/.oh-my-zsh"
 alias bat='batcat'
 # git 
+alias gl=glab
 alias ghs='gh status -e volvo-cars/cdls-consumer,volvo-cars/cdls-mono-volvocars,volvo-cars/dcb-architecture-documentation'
 alias ga='git add'
 alias gau='git add -u'
@@ -18,7 +19,7 @@ alias gpu='git push -u'
 alias grc='git rebase --continue'
 alias gra='git rebase --abort'
 alias gs='git st'
-alias gl='git ls'
+# alias gl='git ls'
 alias glp='git lsp'
 alias gc='git commit --interactive -m '
 alias gcane='git commit --amend --no-edit'
@@ -120,14 +121,16 @@ alias mongodb="docker run --name mongodb \
     -e MONGO_INITDB_ROOT_USERNAME=mongo \
     -e MONGO_INITDB_ROOT_PASSWORD=mongo \
     -d mongo:latest"
+alias cassandra="docker run -d -v "${HOME}/.cassandra:/root/.cassandra" --name cassandra -e MAX_HEAP_SIZE=256M -e HEAP_NEWSIZE=128M -p 9042:9042 cassandra:3.11.2"
 
 # maven
 alias mvnddu='mvn versions:display-dependency-updates -Dorg.slf4j.simpleLogger.log.org.codehaus.mojo.versions.DisplayPropertyUpdatesMojo=info --quiet'
 alias mvndpu='mvn versions:display-property-updates -Dorg.slf4j.simpleLogger.log.org.codehaus.mojo.versions.DisplayPropertyUpdatesMojo=info --quiet'
 alias mvnup='mvn versions:update-properties -DgenerateBackupPoms=false -Dorg.slf4j.simpleLogger.log.org.codehaus.mojo.versions.DisplayPropertyUpdatesMojo=info --quiet'
-alias mvnfmt='mvn com.spotify.fmt:fmt-maven-plugin:format --quiet'
+alias mvnfmt='mvn com.spotify.fmt:fmt-maven-plugin:2.21.1:format --quiet'
 alias mvnbump='mvn versions:set -DgenerateBackupPoms=false'
 alias installgo='curl -L https://go.dev/dl/go1.18.linux-amd64.tar.gz -o - | tar xzf - -C /usr/local/'
 
 # op
 alias vaultgithubtoken='op item get wib6ejzqpzg5aizmpnqgwkyzj4 --field password'
+

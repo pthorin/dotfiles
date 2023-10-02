@@ -15,6 +15,14 @@ update_changelog_gh() {
 
 }
 
+wtfbegincommit() {
+  cat << EOF
+  BEGIN_COMMIT_OVERRIDE
+  ...
+  END_COMMIT_OVERRIDE
+EOF
+}
+
 wtfnetwork() {
   cat << EOF
   fast     -  netflix speed test
@@ -407,3 +415,33 @@ kcimage() {
 ghcopyurl() {
   gh pr view --json url |jq --raw-output ".url" |pbcopy && echo "Copied url to clipboard"
 }
+
+# pomodoro
+# study stream aliases
+# Requires https://github.com/caarlos0/timer to be installed. spd-say should ship with your distro
+
+declare -A pomo_options
+pomo_options["work"]="25"
+pomo_options["break"]="5"
+
+pomodoro () {
+  if [ -n "$1" -a -n "${pomo_options["$1"]}" ]; then
+  val=$1
+  echo $val | lolcat
+  timer -f ${pomo_options["$val"]}m -n "$val"
+  say "'$val' session done"
+  notify-send "'$val' session done"
+  fi
+}
+
+cycle_work_break(){
+    for i in $(seq $1); do
+        pomodoro 'work'
+        pomodoro 'break'
+    done
+}
+
+alias work="pomodoro 'work'"
+alias br="pomodoro 'break'"
+
+
