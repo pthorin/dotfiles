@@ -1,0 +1,24 @@
+#!/bin/bash
+MAX=$(cat /sys/class/backlight/intel_backlight/max_brightness)
+CURRENT=$(cat /sys/class/backlight/intel_backlight/brightness)
+
+function ProgressBar {
+# Process data
+    let _progress=(${1}*100/${2}*100)/100
+    if [ "$_progress" -gt 99 ]; then
+      printf "😎"
+    elif [ $_progress -gt 89 ]; then
+      printf "☀️"
+    elif [ $_progress -gt 49 ]; then
+      printf "💡"
+    elif [ $_progress -gt 24 ]; then
+      printf "🔥"
+    elif [ $_progress -gt 14 ]; then
+      printf "🕯️"
+    elif [ $_progress -gt 0 ]; then
+      printf "🏮"
+    fi
+
+}
+
+ProgressBar $CURRENT $MAX |tee /tmp/brightness
