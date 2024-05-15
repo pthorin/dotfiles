@@ -175,6 +175,9 @@ test-energy = "🫠 ⚡"
 test-location = "🫠 📍"
 test-oipgw = "🫠 oip"
 test-pol = "🫠 🟇"
+prod-acclink = "🚨 acclink 🚨"
+qa-acclink = "⚠ acclink"
+test-acclink = "🫠 acclink"
 
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"

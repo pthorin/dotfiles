@@ -14,7 +14,8 @@ general {
   color_degraded = "#FFC300"
 }
 
-#order += "read_file bigip"
+order += "read_file brightness"
+order += "read_file bigip"
 order += "read_file weeknumber"
 # order += "read_file agenda"
 # order += "load"
@@ -80,14 +81,21 @@ read_file agenda {
 }
 
 read_file weeknumber {
-  color_good = "#fafafa"
+  color_good = "#89dceb"
   path = "/tmp/weeknumber"
   align = "left"
   format = "Week: %content"
 }
 
+read_file brightness {
+  color_good = "#74c7ec"
+  path = "/tmp/brightness"
+  align = "left"
+  format = "%content"
+}
+
 read_file bigip {
-  color_good = "#faaace"
+  color_good = "#f5c2e7"
   path = "/tmp/bigip"
   align = "left"
   format = "BIGIP: %content"

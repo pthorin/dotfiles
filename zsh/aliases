@@ -7,12 +7,8 @@ alias ghs='gh status -e volvo-cars/cdls-consumer,volvo-cars/cdls-mono-volvocars,
 alias ga='git add'
 alias gau='git add -u'
 alias gd='git diff'
-alias gds'git diff --staged'
-alias amend='git commit --amend'
-alias gamend='git commit --amend'
-alias gam='git commit --amend'
+alias gds='git diff --staged'
 alias gp='git push'
-alias gpr='hub pull-request --push --no-edit -c'
 alias gpf='git pushf'
 alias gup='git up'
 alias gpu='git push -u'
@@ -29,6 +25,8 @@ alias ghclone='gh_clone_volvo'
 alias automerge='gh pr merge --squash --auto'
 alias gru="git rebase -i @{u}"
 alias lg='lazygit'
+# Kui
+alias kui='Kui'
 # kubectl
 alias kc='kubecolor'
 alias kca='kc apply -f'
@@ -127,10 +125,11 @@ alias cassandra="docker run -d -v "${HOME}/.cassandra:/root/.cassandra" --name c
 alias mvnddu='mvn versions:display-dependency-updates -Dorg.slf4j.simpleLogger.log.org.codehaus.mojo.versions.DisplayPropertyUpdatesMojo=info --quiet'
 alias mvndpu='mvn versions:display-property-updates -Dorg.slf4j.simpleLogger.log.org.codehaus.mojo.versions.DisplayPropertyUpdatesMojo=info --quiet'
 alias mvnup='mvn versions:update-properties -DgenerateBackupPoms=false -Dorg.slf4j.simpleLogger.log.org.codehaus.mojo.versions.DisplayPropertyUpdatesMojo=info --quiet'
-alias mvnfmt='mvn com.spotify.fmt:fmt-maven-plugin:2.21.1:format --quiet'
+alias mvnfmt='mvn com.spotify.fmt:fmt-maven-plugin:2.22:format --quiet'
 alias mvnbump='mvn versions:set -DgenerateBackupPoms=false'
 alias installgo='curl -L https://go.dev/dl/go1.18.linux-amd64.tar.gz -o - | tar xzf - -C /usr/local/'
 
 # op
-alias vaultgithubtoken='op item get wib6ejzqpzg5aizmpnqgwkyzj4 --field password'
+alias vaultgithubtoken='op item get cidp3dev2tj5qbzc2acprfx5ga --field password'
 
+alias cat='bat'

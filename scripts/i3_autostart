@@ -2,6 +2,7 @@
 #compton --config $HOME/.config/compton/compton.conf -b -i 0.75 &
 #transset --name i3bar &
 lxpolkit &
+#/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
 $HOME/.fehbg &
 nm-applet &
 setxkbmap -option caps:escape &
@@ -14,4 +15,4 @@ dunst &
 workrave &
 blueman-applet &
 #gnome-pomodoro &
-volumeicon &
+pasystray &

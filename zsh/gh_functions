@@ -2,7 +2,7 @@ reload-gh-functions () {
   source ~/repos/dotfiles/zsh/gh_functions
 }
 
-IGNORE_REPOS="-repo:volvo-cars/cdls-mono-volvocars -repo:volvo-cars/cdls-consumer -repo:perlieadman/godwit -repo:kartena/Proj4Leaflet"
+IGNORE_REPOS="-repo:volvo-cars/cdls-mono-volvocars -repo:volvo-cars/cdls-consumer -repo:perliedman/godwit -repo:kartena/Proj4Leaflet"
 gh-api-search-prs-involving-user() {
   MYORG="$1"
   USER="$2"
@@ -10,9 +10,9 @@ gh-api-search-prs-involving-user() {
     -F per_page=100 --paginate \
     -f q="is:open is:pr involves:$USER $IGNORE_REPOS" \
     -t '
-    {{tablerow "PR" "TITLE" "URL" "CREATED AT"}}
+    {{tablerow "TITLE" "URL"}}
     {{ range .items }}
-    {{tablerow (printf "#%v" .number | autocolor "green") .title .html_url (timeago .created_at)}}
+    {{tablerow .title .html_url }}
     {{ end }}
     {{tablerender}}
     '

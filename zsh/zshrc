@@ -138,7 +138,7 @@ source ~/.zecrets > /dev/null
 
 
 export CODE_PATH=~/repos
-export CDPATH=.:~:~/repos:~/repos/connected-vehicle/:~/repos/extended-vehicle:~/energy:~/repos/ash:~/repos/azure:~/repos/gitlab
+export CDPATH=.:~:~/repos:~/repos/3pdx:~/repos/connected-vehicle/:~/repos/extended-vehicle:~/energy:~/repos/ash:~/repos/azure:~/repos/gitlab
 
 # Tiny Care Terminal
 #export TTC_BOTS='honest_update,dmofengineering,selfcare_bot'
@@ -208,6 +208,12 @@ if [[ ! -d "$ZSH/completions" || ! -f "$ZSH/completions/_ctp" ]]; then
     echo "ctp added completions: ctp completion zsh > $ZSH/completions/_ctp"
 fi
 
+if [[ ! -d "$ZSH/completions" || ! -f "$ZSH/completions/_yq" ]]; then
+    mkdir -pv $ZSH/completions
+    yq shell-completion zsh > $ZSH/completions/_yq
+    echo "yq added completions: yq shell-completion zsh > $ZSH/completions/_yq"
+fi
+
 # sdk complete
 function sdk() {
   unset -f sdk
@@ -215,6 +221,19 @@ function sdk() {
   sdk $*
 }
 
+if [[ ! -d "$ZSH/completions" || ! -f "$ZSH/completions/_vacuum" ]]; then
+    mkdir -pv $ZSH/completions
+    vacuum completion zsh > $ZSH/completions/_vacuum
+    echo "vacuum added completions: vacuum completion zsh > $ZSH/completions/_vacuum"
+fi
+
+if [[ ! -d "$ZSH/completions" || ! -f "$ZSH/completions/_k9s" ]]; then
+    mkdir -pv $ZSH/completions
+    k9s completion zsh > $ZSH/completions/_k9s
+    echo "k9s added completions: k9s completion zsh > $ZSH/completions/_k9s"
+fi
+
+setopt nobanghist # disable history expansion
 unsetopt auto_cd
 # run profiler
 #zprof
@@ -231,7 +250,7 @@ autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
 
 if [ -x $(which lolcat) ] && [ -x $(which fortune) ]; then
-  fortune ~/repos/dotfiles/breathe |lolcat --animate
+  fortune ~/repos/dotfiles/breathe |lolcat
 fi
 
 # REVIEW_BASE for git review and git reviewone

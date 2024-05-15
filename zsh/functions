@@ -15,6 +15,16 @@ update_changelog_gh() {
 
 }
 
+wtfebook() {
+  cat << EOF
+  knock knock
+  who's there?
+  knock
+  knock who?
+  just use knock
+EOF
+}
+
 wtfbegincommit() {
   cat << EOF
   BEGIN_COMMIT_OVERRIDE
@@ -34,6 +44,7 @@ EOF
 wtfmaventest() {
   cat << EOF
   mvn test -Dtest="TheSecondUnitTest#whenTestCase1*"
+  mvn test -Dtest="TheSecondUnitTest$Engine#whenTestCase1*" -Dsurefire.failIfNoSpecifiedTests=false
 EOF
 }
 
@@ -51,6 +62,20 @@ cat << END
   echo | openssl s_client -showcerts -servername google.com -connect google.com:443 2>/dev/null | openssl x509 -inform pem -noout -text
   # or this other function I created in this file
   checksslcert google.com
+  # convert crt to pem
+  openssl x509 -in cert.crt -out cert.pem
+  # convert cer to pem
+  openssl x509 -in cert.cer -out cert.pem
+  # pem to text
+  openssl x509 -noout -text -in cert.pem
+  # get CA cert for a server (mak)
+  echo quit | openssl s_client -showcerts -servername <server> -connect <server>:443 > cacert.pem
+END
+}
+wtfcsr() {
+cat << END
+  # → This will generate a CSR called "CSR.csr", and a private key called "privateKey.key"
+  openssl req -out CSR.csr -new -newkey rsa:2048 -nodes -keyout privateKey.key
 END
 }
 checksslcert () {
@@ -341,11 +366,18 @@ httpcat() {
 
 brightness() {
   #xrandr --output DP-6 --brightness $(echo "scale=2; $1/10" | bc -l)
+  MAX=$(cat /sys/class/backlight/intel_backlight/max_brightness)
+  let PERCENT="$MAX/99"
+
   if [ "$1" -eq "" ]; then
-    echo "scale=0; $(cat /sys/class/backlight/intel_backlight/brightness)/1000"|bc
+    echo brightnessbar
+  elif [ "$1" -eq "100" ]; then
+    echo $MAX |sudo tee /sys/class/backlight/intel_backlight/brightness > /dev/null
   else
-    echo "$1*1000" |bc|sudo tee /sys/class/backlight/intel_backlight/brightness
+    let LEVEL="$1*PERCENT"
+    echo $LEVEL |sudo tee /sys/class/backlight/intel_backlight/brightness > /dev/null
   fi
+  brightnessemoji
 }
 
 epochtodate() {
@@ -379,6 +411,20 @@ ssl_exportkeytoolkeystore() {
 # ag hilite
 aghilite() {
   ag "\"$1\":\".+?\""
+}
+
+wtfawkcsv() {
+  cat << EOF
+  awk -vFPAT='([^,]*)|("[^"]+")' -vOFS=, '{print $5}' countries.csv |sort -u
+  "Africa"
+  "Antarctica"
+  "Asia"
+  "Continent"
+  "Europe"
+  "North America"
+  "Oceania"
+  "South America"
+EOF
 }
 
 wtfmicroplane() {
@@ -445,3 +491,6 @@ alias work="pomodoro 'work'"
 alias br="pomodoro 'break'"
 
 
+randomString() {
+  tr -dc A-Za-z0-9 </dev/urandom | head -c 13
+}

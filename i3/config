@@ -22,7 +22,7 @@ exec --no-startup-id setxkbmap se # Set swedish keyboard
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:DejaVu Sans Mono 8
+font pango:Monaspace Argon 8
 
 #assign [class="IntelliJ IDEA"] 4
 #assign [title="Tip of the Day"] 4
@@ -55,8 +55,8 @@ bindsym $mod+Shift+q kill
 #bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 #bindsym $mod+d exec --no-startup-id rofi -combi-modi window#drun#ssh
 #bindsym $mod+d exec --no-startup-id "rofi -show window,drun,ssh -font \\"DejaVu 9\\" -run-shell-command '{terminal} -e \\" {cmd}; read -n 1 -s\\"'"
-bindsym $mod+d exec --no-startup-id "rofi -show drun"
-bindsym $mod+shift+d exec --no-startup-id "rofi -modi combi -show combi -combi-modi window#drun#ssh#run"
+bindsym $mod+shift+d exec --no-startup-id "rofi -show drun"
+bindsym $mod+d exec --no-startup-id "rofi -modi combi -show combi -combi-modi window#drun#run"
 #bindsym section exec --no-startup-id "rofi -modi combi -show combi -combi-modi window#drun#ssh#run"
 #bindsym $mod+shift+d exec --no-startup-id "rofi -modi run -show run"
 bindsym shift+section exec --no-startup-id "rofi -modi run -show run"
@@ -115,6 +115,8 @@ bindsym $mod+a layout default
 # focus the child container
 #bindsym $mod+d focus child
 
+#rename workspace
+bindsym $alt+shift+r exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
 # switch to workspace
 bindsym $mod+1 workspace 1
 # bindsym F1 workspace 1
@@ -232,6 +234,7 @@ set $crust     #11111b
 
 
   status_command i3status
+  #status_command i3blocks
   colors {
     ## hand made
     # background #000000
@@ -295,6 +298,7 @@ bindsym $mod+m move workspace to output left
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle # mute mic
 bindsym KP_Subtract exec --no-startup-id $home/scripts/mute-mic.sh
 
 # Sreen brightness controls
@@ -321,14 +325,14 @@ exec xmodmap $home/.xmodmaprc
 bindsym $mod+Shift+minus move scratchpad
 for_window [title="^Spotify"] mark "music" #, move scratchpad
 # for_window [title="^Slack"] move scratchpad
-for_window [title="^Signal"] move scratchpad
+for_window [title="Signal"] move scratchpad
 # for_window [title="^Riot"] move scratchpad
 # for_window [title="^Element"] move scratchpad
 for_window [title=".*Discord$"] move scratchpad
 # for_window [title=".*Teams$"] move scratchpad
 bindsym $mod+comma [con_mark="music"] scratchpad show
 # bindsym F12 [con_mark="music"] scratchpad show
-bindsym $mod+period [title=".+?- Slack$"] scratchpad show
+bindsym $mod+period [title=".*Slack.*"] scratchpad show
 bindsym $mod+t [title=".*Teams$"] scratchpad show
 # bindsym F9 [title="^Slack"] scratchpad show
 bindsym $mod+i [title="^Signal"] scratchpad show
@@ -337,6 +341,7 @@ bindsym $mod+o [title=".*Discord$"] scratchpad show
 # bindsym F11 [title=".*Discord$"] scratchpad show
 bindsym $mod+Shift+comma [title="^Element"] scratchpad show
 bindsym $mod+Shift+w [title=".*1Password$"] scratchpad show
+bindsym $mod+Shift+i [title="^Messages for web$"] scratchpad show
 for_window [title="^JetBrains Toolbox"] floating enable
 for_window [title="^Volume Control$"] floating enable
 for_window [title="^Volume Control$"] border pixel 1
@@ -358,8 +363,12 @@ bindsym Mod1+Shift+Tab focus left
 exec_always --no-startup-id $home/scripts/i3_autostart_always
 exec --no-startup-id $home/scripts/i3_autostart
 
-bindsym $mod+F5 exec --no-startup-id killall -SIGUSR1 dunst # Pause
-bindsym $mod+Shift+F5 exec --no-startup-id killall -SIGUSR2 dunst # Resume
+bindsym $mod+F5 exec --no-startup-id dunstctl set-paused toggle
+bindsym $alt+space exec --no-startup-id dunstctl close
+bindsym F1 exec --no-startup-id dunstctl close
+bindsym Ctrl+Shift+space exec --no-startup-id dunstctl close-all
+bindsym Ctrl+section exec --no-startup-id dunstctl history-pop
+bindsym Ctrl+Shift+period exec --no-startup-id dunstctl context
 
 bindsym $mod+u exec --no-startup-id gnome-pomodoro --start
 bindsym $mod+Shift+u exec --no-startup-id gnome-pomodoro --pause-resume
