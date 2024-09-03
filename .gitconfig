@@ -11,15 +11,18 @@
   lsf = log --graph --decorate --all --format=full
   lsp = log --graph --decorate --format=short --all -p
   last = log -1
+  lastfiles=diff-tree --no-commit-id --name-only HEAD -r
+  openlastfiles=!git diff-tree --no-commit-id --name-only HEAD -r | xargs vim -o
   lasts = log -1 --stat
   lastp = log -1 -p
   lastsp = log -1 -p --stat
   lastps = log -1 -p --stat
   st = status --short --branch
   co = checkout
+  cod = "!f() { DEFAULT=$(git default) ; git co $DEFAULT; git fetch --prune ; git rebase ; }; f"
   ec = config --global -e
-  up = !git pull --rebase --prune $@
-  upa = !git pull --rebase --prune --autostash $@
+  up = "!f() { git fetch --prune $@ ; git rebase ; }; f"
+  upa = !git fetch --prune ; git rebase --autostash $@
   upd = "!git pull --rebase --prune origin $(git default)"
   cob = checkout -b
   save = !git add -A && git commit -m 'SAVEPOINT'
@@ -84,6 +87,7 @@
   autocrlf = input
   excludesFile = ~/.gitignore
   pager = batcat
+	symlinks = false
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -91,10 +95,11 @@
 	required = true
 [credential]
 	credentialStore = secretservice
+	helper = 
 	helper = /usr/local/share/gcm-core/git-credential-manager-core
+	helper = 
+	helper = /usr/local/bin/git-credential-manager
 [credential "https://dev.azure.com"]
 	useHttpPath = true
-[credential "https://gitlab.oss.volvoc3.com"]
-	provider = gitlab
-	gitLabDevClientId = $GITLAB_CLIENT_ID
-	gitLabDevClientSecret = $GITLAB_CLIENT_SECRET
+[credential "https://prod-global-open-innovation-portal-apim.scm.azure-api.net"]
+	provider = generic
