@@ -42,7 +42,8 @@ floating_modifier $mod
 workspace_auto_back_and_forth yes
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+#bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec /home/pthorin/.local/kitty.app/bin/kitty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -118,34 +119,34 @@ bindsym $mod+a layout default
 #rename workspace
 bindsym $alt+shift+r exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
 # switch to workspace
-bindsym $mod+1 workspace 1
+bindsym $mod+1 workspace ⌨️
 # bindsym F1 workspace 1
-bindsym $mod+2 workspace 2
+bindsym $mod+2 workspace 🌍️
 # bindsym F2 workspace 2
-bindsym $mod+3 workspace 3
+bindsym $mod+3 workspace 🧑🏻‍💻
 # bindsym F3 workspace 3
-bindsym $mod+4 workspace 4
+bindsym $mod+4 workspace 🎥
 # bindsym F4 workspace 4
 bindsym $mod+5 workspace 5
 bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
+bindsym $mod+8 workspace 🎵
 bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
-bindsym $mod+n workspace NDA
+bindsym $mod+0 workspace 🧝🏻
+bindsym $mod+period workspace 🗨️
+bindsym $mod+Shift+period move container to workspace 🗨️
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+1 move container to workspace ⌨️
+bindsym $mod+Shift+2 move container to workspace 🌍️
+bindsym $mod+Shift+3 move container to workspace 🧑🏻‍💻
+bindsym $mod+Shift+4 move container to workspace 🎥
 bindsym $mod+Shift+5 move container to workspace 5
 bindsym $mod+Shift+6 move container to workspace 6
 bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+8 move container to workspace 🎵
 bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
-bindsym $mod+Shift+n move container to workspace NDA
+bindsym $mod+Shift+0 move container to workspace 🧝🏻
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -233,8 +234,8 @@ set $crust     #11111b
 ## eo catppuccin
 
 
-  status_command i3status
-  #status_command i3blocks
+  # status_command i3status
+  status_command i3blocks
   colors {
     ## hand made
     # background #000000
@@ -299,7 +300,6 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle # mute mic
-bindsym KP_Subtract exec --no-startup-id $home/scripts/mute-mic.sh
 
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec --no-startup-id brightness-up # increase screen brightness
@@ -320,6 +320,8 @@ bindsym $mod+shift+F7 exec /usr/local/bin/hotplug_monitor.sh
 
 exec xmodmap $home/.xmodmaprc
 
+bindsym $mod+section exec $home/thirdparty-repos/Rofication/rofication-gui.py
+
 # Scratchpad
 # Make the currently focused window a scratchpad
 bindsym $mod+Shift+minus move scratchpad
@@ -332,7 +334,8 @@ for_window [title=".*Discord$"] move scratchpad
 # for_window [title=".*Teams$"] move scratchpad
 bindsym $mod+comma [con_mark="music"] scratchpad show
 # bindsym F12 [con_mark="music"] scratchpad show
-bindsym $mod+period [title=".*Slack.*"] scratchpad show
+#bindsym $mod+period [title=".*Slack.*"] scratchpad show
+# bindsym $mod+period [title=".*Slack.*"] focus
 bindsym $mod+t [title=".*Teams$"] scratchpad show
 # bindsym F9 [title="^Slack"] scratchpad show
 bindsym $mod+i [title="^Signal"] scratchpad show
@@ -350,7 +353,7 @@ for_window [title="^Bluetooth Devices$"] floating enable
 for_window [title="^Bluetooth Devices$"] border pixel 1
 for_window [title="^SimpleScreenRecorder"] floating enable
 for_window [title="^Slack.+?- Huddle$"] border pixel 1
-for_window [title="^Slack.+?- Huddle$"] floating enable
+#for_window [title="^Slack.+?- Huddle$"] floating enable
 for_window [title="^Calculator$"] floating enable
 #for_window [title="emote"] floating enable
 # Show the first scratchpad window
@@ -366,7 +369,7 @@ exec --no-startup-id $home/scripts/i3_autostart
 bindsym $mod+F5 exec --no-startup-id dunstctl set-paused toggle
 bindsym $alt+space exec --no-startup-id dunstctl close
 bindsym F1 exec --no-startup-id dunstctl close
-bindsym Ctrl+Shift+space exec --no-startup-id dunstctl close-all
+# bindsym Ctrl+Shift+space exec --no-startup-id dunstctl close-all
 bindsym Ctrl+section exec --no-startup-id dunstctl history-pop
 bindsym Ctrl+Shift+period exec --no-startup-id dunstctl context
 

@@ -15,6 +15,16 @@ update_changelog_gh() {
 
 }
 
+wtfredis() {
+  cat << EOF
+  export REDISCLI_AUTH=<password>
+  redis_cli --tls -h <host> -p <port>
+  SELECT <db-index>                   # 0 is default
+  HLEN vehicle-metadata               # how many hash values are there in the hash?
+  HGET vehicle-metadata <VIN>         # get the metadata for a VIN
+EOF
+}
+
 wtfebook() {
   cat << EOF
   knock knock

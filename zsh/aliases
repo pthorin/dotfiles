@@ -125,7 +125,7 @@ alias cassandra="docker run -d -v "${HOME}/.cassandra:/root/.cassandra" --name c
 alias mvnddu='mvn versions:display-dependency-updates -Dorg.slf4j.simpleLogger.log.org.codehaus.mojo.versions.DisplayPropertyUpdatesMojo=info --quiet'
 alias mvndpu='mvn versions:display-property-updates -Dorg.slf4j.simpleLogger.log.org.codehaus.mojo.versions.DisplayPropertyUpdatesMojo=info --quiet'
 alias mvnup='mvn versions:update-properties -DgenerateBackupPoms=false -Dorg.slf4j.simpleLogger.log.org.codehaus.mojo.versions.DisplayPropertyUpdatesMojo=info --quiet'
-alias mvnfmt='mvn com.spotify.fmt:fmt-maven-plugin:2.22:format --quiet'
+alias mvnfmt='mvn com.spotify.fmt:fmt-maven-plugin:2.24:format --quiet'
 alias mvnbump='mvn versions:set -DgenerateBackupPoms=false'
 alias installgo='curl -L https://go.dev/dl/go1.18.linux-amd64.tar.gz -o - | tar xzf - -C /usr/local/'
 
@@ -133,3 +133,8 @@ alias installgo='curl -L https://go.dev/dl/go1.18.linux-amd64.tar.gz -o - | tar 
 alias vaultgithubtoken='op item get cidp3dev2tj5qbzc2acprfx5ga --field password'
 
 alias cat='bat'
+
+alias nvim-kickstart='NVIM_APPNAME="nvim-kickstart" nvim'
+alias nvim-lsp='NVIM_APPNAME="nvim-lsp" nvim'
+
+alias kittyconfig='vim ~/.config/kitty/kitty.conf'

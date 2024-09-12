@@ -67,6 +67,8 @@ nnoremap <c-i> :action Forward<cr>
 " Navigation
 nnoremap ]c :action GotoNextError<cr>
 nnoremap [c :action GotoPreviousError<cr>
+nnoremap ]d :action GotoNextError<cr>
+nnoremap [d :action GotoPreviousError<cr>
 nnoremap ]h :action VcsShowNextChangeMarker<cr>
 nnoremap [h :action VcsShowPrevChangeMarker<cr>
 

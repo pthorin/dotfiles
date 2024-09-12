@@ -22,8 +22,9 @@
   cod = "!f() { DEFAULT=$(git default) ; git co $DEFAULT; git fetch --prune ; git rebase ; }; f"
   ec = config --global -e
   up = "!f() { git fetch --prune $@ ; git rebase ; }; f"
-  upa = !git fetch --prune ; git rebase --autostash $@
-  upd = "!git pull --rebase --prune origin $(git default)"
+  upa = "!f() { git fetch --prune ; git rebase --autostash $@; }; f"
+  ; upd = "!git pull --rebase --prune origin $(git default)"
+  upd = "!f() { DEFAULT=$(git default) ; git fetch --prune ; git rebase origin/$DEFAULT; }; f"
   cob = checkout -b
   save = !git add -A && git commit -m 'SAVEPOINT'
   wip = commit -am "WIP"
@@ -95,9 +96,6 @@
 	required = true
 [credential]
 	credentialStore = secretservice
-	helper = 
-	helper = /usr/local/share/gcm-core/git-credential-manager-core
-	helper = 
 	helper = /usr/local/bin/git-credential-manager
 [credential "https://dev.azure.com"]
 	useHttpPath = true
