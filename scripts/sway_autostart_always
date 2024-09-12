@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+xset s off &
+xset -dpms &
+xset r off &
+xmodmap $HOME/.Xmodmap

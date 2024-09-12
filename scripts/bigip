@@ -1,0 +1,2 @@
+#!/bin/bash
+if f5fpc -i |head -n1 |sed 's/.*: //' |ag 'not connected' &> /dev/null ; then echo '🛑' ; else echo '💚' ; fi

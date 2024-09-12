@@ -1,0 +1,2 @@
+#!/bin/sh
+curl "https://http.cat/$1" -o - | feh -
