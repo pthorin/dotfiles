@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+pactl set-card-profile bluez_card.F4_9D_8A_08_FA_98 handsfree_head_unit
+pactl set-default-sink bluez_sink.F4_9D_8A_08_FA_98.handsfree_head_unit
+pactl set-default-source bluez_source.F4_9D_8A_08_FA_98.handsfree_head_unit
+
+for x in $(pactl list sink-inputs short | cut -d' ' -f1); 
+do
+  pactl move-sink-input $x bluez_sink.F4_9D_8A_08_FA_98.handsfree_head_unit;
+done
+
+for x in $(pactl list source-outputs short | cut -d' ' -f1);
+do
+  pactl move-source-output $x bluez_source.F4_9D_8A_08_FA_98.handsfree_head_unit;
+done
