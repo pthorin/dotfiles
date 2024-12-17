@@ -1,0 +1,14 @@
+#!/bin/bash
+set -euo pipefail
+
+gh api \
+  -H "Accept: application/vnd.github+json" \
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  /repos/:owner/:repo/pulls/"$1"/comments \
+  --template '
+  {{ range .}}
+
+  {{ .user.login }} said:  {{ .body }}
+
+  {{ end }}
+' | glow -
