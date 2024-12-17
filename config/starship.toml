@@ -156,7 +156,7 @@ format = '[ ⏳ $time ]($style)'
 [kubernetes]
 disabled = false
 style = "fg:sapphire"
-format = '[☸️  $context ](fg:sapphire)'
+format = '[☸️  $context ($namespace) ](fg:sapphire)'
 [kubernetes.context_aliases]
 prod = "🚨 Prod 🚨"
 prod-conn = "🚨 Conn 🚨"
