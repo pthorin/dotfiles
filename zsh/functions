@@ -361,11 +361,6 @@ mdman() {
   pandoc -s -f markdown -t man "$1" |groff -T utf8 -man -
 }
 
-weather() {
-# weather
-  docker run --rm -it jessfraz/weather -u si "$*"
-}
-
 setmousequickaslightning() {
   xset mouse 10 0
 }
@@ -472,6 +467,10 @@ ghcopyurl() {
   gh pr view --json url |jq --raw-output ".url" |pbcopy && echo "Copied url to clipboard"
 }
 
+glcopyurl() {
+  glab mr view -F json |jq '.web_url' --raw-output |pbcopy && echo "Copied url to clipboard"
+}
+
 # pomodoro
 # study stream aliases
 # Requires https://github.com/caarlos0/timer to be installed. spd-say should ship with your distro
@@ -503,4 +502,10 @@ alias br="pomodoro 'break'"
 
 randomString() {
   tr -dc A-Za-z0-9 </dev/urandom | head -c 13
+}
+
+fe () {
+	local files
+	IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0)) 
+	[[ -n "$files" ]] && ${EDITOR:-nvim} "${files[@]}"
 }
