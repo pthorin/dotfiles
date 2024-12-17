@@ -1,0 +1,2 @@
+#!/bin/bash
+kanshi -c ~/.config/kanshi/dual

@@ -1,0 +1,4 @@
+#!/bin/bash
+#pkill kanshi
+sleep 1s
+kanshi -c ~/.config/kanshi/nomad
