@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+export XDG_CURRENT_DESKTOP=sway
 #compton --config $HOME/.config/compton/compton.conf -b -i 0.75 &
 #transset --name i3bar &
 lxpolkit &
@@ -9,7 +10,7 @@ setxkbmap -option caps:escape &
 numlockx &
 xmodmap ~/.Xmodmap &
 slack &
-signal-desktop &
+signal-desktop --no-sandbox --password-store="gnome-libsecret" &
 sudo openvpn --config ~/ovpn/PTHORIN@vpn.oss.volvoc3.com.ovpn --daemon &
 mako &
 workrave &
