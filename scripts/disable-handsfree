@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+pacmd set-card-profile bluez_card.68_D6_ED_CF_B4_A6 a2dp_sink;
+
+pacmd set-card-profile bluez_card.00_25_D1_2D_7B_4E a2dp_sink ;
+pacmd set-card-profile bluez_card.F4_9D_8A_08_FA_98 a2dp_sink ;
