@@ -377,3 +377,6 @@ bindsym Ctrl+Shift+period exec --no-startup-id dunstctl context
 # bindsym $mod+u exec --no-startup-id gnome-pomodoro --start
 # bindsym $mod+Shift+u exec --no-startup-id gnome-pomodoro --pause-resume
 # exec --no-startup-id xinput set-prop 13 'libinput Tapping Enabled' 1 # Set tapping enabled
+# screenshot area to clipboard
+bindsym --release Ctrl+Shift+S exec --no-startup-id flameshot gui --clipboard
+
