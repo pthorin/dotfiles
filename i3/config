@@ -15,6 +15,8 @@ set $home /home/pthorin
 #exec --no-startup-id xinput set-prop 13 'libinput Tapping Enabled' 1 # Set tapping enabled
 exec --no-startup-id xinput set-prop 'SYNA311A:00 06CB:CEA5 Touchpad' 'libinput Tapping Enabled' 1 # set tapping enabled
 exec --no-startup-id xinput set-prop 'SYNA311A:00 06CB:CEA5 Touchpad' 'libinput Natural Scrolling Enabled' 1 # natural scrolling mate 
+exec --no-startup-id xinput set-prop 'SYNA311A:00 06CB:CEA5 Touchpad' 'libinput Accel Speed' 1 # set acceleration speed
+exec --no-startup-id xinput set-prop 'Logitech USB Optical Mouse' 'libinput Accel Speed' 1
 exec --no-startup-id setxkbmap se # Set swedish keyboard
 
 
