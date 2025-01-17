@@ -15,7 +15,7 @@ set $home /home/pthorin
 #exec --no-startup-id xinput set-prop 13 'libinput Tapping Enabled' 1 # Set tapping enabled
 exec --no-startup-id xinput set-prop 'SYNA311A:00 06CB:CEA5 Touchpad' 'libinput Tapping Enabled' 1 # set tapping enabled
 exec --no-startup-id xinput set-prop 'SYNA311A:00 06CB:CEA5 Touchpad' 'libinput Natural Scrolling Enabled' 1 # natural scrolling mate 
-exec --no-startup-id xinput set-prop 'SYNA311A:00 06CB:CEA5 Touchpad' 'libinput Accel Speed' 1 # set acceleration speed
+exec --no-startup-id xinput set-prop 'SYNA311A:00 06CB:CEA5 Touchpad' 'libinput Accel Speed' 0.5 # set acceleration speed
 exec --no-startup-id xinput set-prop 'Logitech USB Optical Mouse' 'libinput Accel Speed' 1
 exec --no-startup-id setxkbmap se # Set swedish keyboard
 
@@ -26,7 +26,7 @@ exec --no-startup-id setxkbmap se # Set swedish keyboard
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:Monaspace Argon 8
+font pango:Monaspace Argon 12
 
 #assign [class="IntelliJ IDEA"] 4
 #assign [title="Tip of the Day"] 4
@@ -315,8 +315,14 @@ bindsym XF86AudioPause exec --no-startup-id playerctl pause
 bindsym Pause exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
-bindsym --release Ctrl+Print exec --no-startup-id $home/scripts/import-to-clipboard
-bindsym --release Shift+Print exec --no-startup-id $home/scripts/import-to-file
+# bindsym --release Ctrl+Print exec --no-startup-id $home/scripts/import-to-clipboard
+# bindsym --release Shift+Print exec --no-startup-id $home/scripts/import-to-file
+# screenshot area to clipboard
+bindsym --release Print exec --no-startup-id flameshot gui --clipboard
+bindsym --release Ctrl+Print exec --no-startup-id flameshot gui --clipboard
+bindsym --release Shift+Print exec --no-startup-id flameshot gui --path $home/Pictures/Screenshot-"$(date -Iseconds)".png
+
+bindsym --release Ctrl+Shift+S exec --no-startup-id flameshot gui --clipboard
 
 bindsym XF86Display exec $home/scripts/xrandr-on
 bindsym $mod+F7 exec $home/scripts/xrandr-on
@@ -381,6 +387,4 @@ bindsym Ctrl+Shift+period exec --no-startup-id dunstctl context
 # bindsym $mod+u exec --no-startup-id gnome-pomodoro --start
 # bindsym $mod+Shift+u exec --no-startup-id gnome-pomodoro --pause-resume
 # exec --no-startup-id xinput set-prop 13 'libinput Tapping Enabled' 1 # Set tapping enabled
-# screenshot area to clipboard
-bindsym --release Ctrl+Shift+S exec --no-startup-id flameshot gui --clipboard
 
