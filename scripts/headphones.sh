@@ -7,15 +7,16 @@ pactl set-sink-port alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.Hi
 pactl set-default-sink alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp__sink ;
 pactl set-default-source alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp__source ;
 
-
-for x in $(pactl list sink-inputs short | cut -d' ' -f1); 
+#  awk '{ print $1 }'
+for x in $(pactl list sink-inputs short | awk '{ print $1 }'); 
 do
-  pactl move-sink-input $x alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp__sink ;
+  pactl move-sink-input $x alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp__sink ; 
 done
 
-for x in $(pactl list source-outputs short | cut -d' ' -f1);
+for x in $(pactl list source-outputs short | awk '{ print $1 }');
 do
   pactl move-source-output $x alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp__source ;
 done
 
 touch /tmp/headphones
+exit 0
