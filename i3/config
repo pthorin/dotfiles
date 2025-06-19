@@ -28,7 +28,7 @@ exec --no-startup-id setxkbmap se # Set swedish keyboard
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 font pango:Monaspace Argon 12
 
-#assign [class="IntelliJ IDEA"] 4
+assign [class="IntelliJ IDEA"] 3 🧑🏻‍💻
 #assign [title="Tip of the Day"] 4
 
 # Before i3 v4.8, we used to recommend this one as the default:
@@ -137,8 +137,8 @@ bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8 🎵
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10 🧝🏻
-bindsym $mod+period workspace 🗨️
-bindsym $mod+Shift+period move container to workspace 🗨️
+# bindsym $mod+period workspace 🗨️
+# bindsym $mod+Shift+period move container to workspace 🗨️
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1 ⌨️
@@ -156,6 +156,21 @@ bindsym $mod+Shift+0 move container to workspace 10 🧝🏻
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
+
+set $mode_system System (l) lock, (e) logout, (s) suspend, (r) reboot, (Shift+s) shutdown
+mode "$mode_system" {
+  bindsym l exec --no-startup-id $home/scripts/fuzz, mode "default"
+  bindsym e i3-msg exit, mode "default"
+  bindsym s exec --no-startup-id $home/scripts/fuzz & systemctl suspend, mode "default"
+  bindsym r exec --no-startup-id systemctl reboot, mode "default"
+  bindsym Shift+s exec --no-startup-id systemctl poweroff, mode "default"
+
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+bindsym $mod+Pause mode "$mode_system"
+bindsym $mod+Insert mode "$mode_system"
+
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
@@ -337,7 +352,7 @@ bindsym $mod+section exec $home/thirdparty-repos/Rofication/rofication-gui.py
 # Make the currently focused window a scratchpad
 bindsym $mod+Shift+minus move scratchpad
 for_window [title="^Spotify"] mark "music" #, move scratchpad
-# for_window [title="^Slack"] move scratchpad
+for_window [title="^Slack"] move scratchpad
 for_window [title="Signal"] move scratchpad
 # for_window [title="^Riot"] move scratchpad
 # for_window [title="^Element"] move scratchpad
@@ -345,7 +360,7 @@ for_window [title=".*Discord$"] move scratchpad
 # for_window [title=".*Teams$"] move scratchpad
 bindsym $mod+comma [con_mark="music"] scratchpad show
 # bindsym F12 [con_mark="music"] scratchpad show
-#bindsym $mod+period [title=".*Slack.*"] scratchpad show
+bindsym $mod+period [title=".*Slack.*"] scratchpad show
 # bindsym $mod+period [title=".*Slack.*"] focus
 bindsym $mod+t [title=".*Teams$"] scratchpad show
 # bindsym F9 [title="^Slack"] scratchpad show

@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
-echo 'GOVERNOR="performance"' | sudo tee /etc/default/cpufrequtils
-sudo service cpufrequtils restart
+# echo 'GOVERNOR="performance"' | sudo tee /etc/default/cpufrequtils
+# sudo service cpufrequtils restart
+powerprofilesctl set performance
+for x in /sys/devices/system/cpu/cpufreq/policy[0-9]*/scaling_governor; do echo performance | sudo tee $x; done

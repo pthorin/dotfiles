@@ -1,8 +1,3 @@
-gh_clone_volvo () {
-  # clone $1 (repo) to $2 (custom name) or default to repo name
-  gh repo clone volvo-cars/"$1" "${2-$1}"
-}
-
 update_changelog_gh() {
   #gh release view $1 --json body --json publishedAt --json tagName --json name -q '"## "+.name,"","- Published: "+(.publishedAt|strptime("%FT%TZ")|strftime("%F %T")),"- Tag: "+.tagName,"",.body,""' |sed -i '2r /dev/stdin' CHANGELOG.md
     gh release view "$1" --json body,name,tagName,publishedAt --template "## {{ .name }}
@@ -80,6 +75,9 @@ cat << END
   openssl x509 -noout -text -in cert.pem
   # get CA cert for a server (mak)
   echo quit | openssl s_client -showcerts -servername <server> -connect <server>:443 > cacert.pem
+
+  # to pkcs
+  openssl pkcs12 -export -in certificate.pem -inkey privateKey.key -out certificate.pfx
 END
 }
 wtfcsr() {
@@ -204,11 +202,13 @@ dryconflict() {
 }
 
 git-exclude-untracked() {
+  echo ''|tee -a .git/info/exclude
   git st --untracked-files=normal |ag -Q "?? " |cut -d" " -f2 | tee -a .git/info/exclude
 }
 
 
 git-ignore-untracked() {
+  echo ''|tee -a .gitignore
   git st --untracked-files=normal |ag -Q "?? " |cut -d" " -f2 | tee -a .gitignore
 }
 
@@ -265,9 +265,32 @@ team-involves() {
     --jq '[.[].login] | map("involves:\(.)") | join(" ")'
 }
 
+update_kustomize() {
+  curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+}
+update_google_java_format() {
+  curl -L "https://github.com/google/google-java-format/releases/latest/download/google-java-format_linux-x86-64" -o /usr/local/bin/google-java-format
+  chmod +x /usr/local/bin/google-java-format
+}
+
+update_k9s() {
+  curl -L "https://github.com/derailed/k9s/releases/latest/download/k9s_linux_amd64.deb" -o ~/Downloads/k9s_linux_amd64.deb
+  sudo apt install ~/Downloads/k9s_linux_amd64.deb
+}
+
+
 update_vscode() {
   curl -L "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64" -o ~/Downloads/code.deb
   sudo apt install ~/Downloads/code.deb
+}
+
+update_glab(){
+  new_version=$1
+  ver=$(echo $new_version |awk -F'v' '{print $NF}')
+  # https://gitlab.com/gitlab-org/cli/-/releases/v1.59.2/downloads/glab_1.59.2_linux_amd64.deb
+  download_url="https://gitlab.com/gitlab-org/cli/-/releases/${new_version}/downloads/glab_${ver}_linux_amd64.deb"
+  curl -L "${download_url}" -o ~/Downloads/glab.deb
+  sudo apt install ~/Downloads/glab.deb
 }
 
 update_noisetorch() {
@@ -389,6 +412,10 @@ epochtodate() {
   date --date=@$1
 }
 
+epochtodateutc() {
+  date -u --date=@$1
+}
+
 mrplease() {
   TEMPLATE="Hi, <https://vcc-consumer-digital.slack.com/team/U036G1J956K|@pthorin> here - Could you please look at this MR? $1 :gratitude-thank-you:"
   JSON_STRING=$(jq -n --arg MSG "$TEMPLATE" '{"link_names":true,"parse":"full","channel":"CHQ0AQHM3","blocks":[{"type":"section","text":{"type":"mrkdwn","text": $MSG}}]}')
@@ -416,6 +443,15 @@ ssl_exportkeytoolkeystore() {
 # ag hilite
 aghilite() {
   ag "\"$1\":\".+?\""
+}
+
+wtfjq() {
+cat << EOF
+cat maximum-retries-may27-july-19.json.json | jq '.result."arguments{}"|.[1]' -r |jq '.|[.eventType, .eventId, .timestamp, .vin, .data.locationId, .data.connected, .occurredAt, .linkId, .userId, .partnerAccountId, .reason] |@csv' -r
+# or define something like this in your local ~/.jq file, see https://qmacro.org/blog/posts/2022/05/19/json-object-values-into-csv-with-jq/
+def onlyvalues: [ keys[] as $k | .[$k] ];
+# it doesn't work with something like `.data.locationId` though
+EOF
 }
 
 wtfawkcsv() {

@@ -29,6 +29,8 @@ alias lg='lazygit'
 alias kui='Kui'
 # kubectl
 alias kc='kubecolor'
+#alias kustomize='kc kustomize'
+alias stern='kc stern'
 alias kca='kc apply -f'
 alias kcp='kc get pods --label-columns app'
 alias kcd='kc get deployments --label-columns app'
@@ -89,6 +91,11 @@ alias remarkwithdefaultrc='remark -r ~/repos/remark/.remarkrc'
 alias renametomain="git fetch --all && git remote set-head origin -a && git branch --set-upstream-to origin/main && git branch -m master main" 
 # cal
 alias cal='ncal -b -M -w'
+alias caly='cal $(date +%Y)'
+alias q1='cal -3 2 $(date +%Y)'
+alias q2='cal -3 5 $(date +%Y)'
+alias q3='cal -3 8 $(date +%Y)'
+alias q4='cal -3 11 $(date +%Y)'
 # awslogin
 alias awslogin='aws-vault exec -t `ykman oath accounts code -s Amazon` pt'
 alias avl='av login'
@@ -124,8 +131,13 @@ alias cassandra="docker run -d -v "${HOME}/.cassandra:/root/.cassandra" --name c
 # maven
 alias mvnddu='mvn versions:display-dependency-updates -Dorg.slf4j.simpleLogger.log.org.codehaus.mojo.versions.DisplayPropertyUpdatesMojo=info --quiet'
 alias mvndpu='mvn versions:display-property-updates -Dorg.slf4j.simpleLogger.log.org.codehaus.mojo.versions.DisplayPropertyUpdatesMojo=info --quiet'
-alias mvnup='mvn versions:update-properties -DgenerateBackupPoms=false -Dorg.slf4j.simpleLogger.log.org.codehaus.mojo.versions.DisplayPropertyUpdatesMojo=info --quiet'
-alias mvnfmt='mvn com.spotify.fmt:fmt-maven-plugin:2.24:format --quiet'
+alias mvnparent='mvn versions:display-parent-updates -Dorg.slf4j.simpleLogger.log.org.codehaus.mojo.versions.DisplayPropertyUpdatesMojo=info --quiet'
+alias mvnup='mvn versions:update-parent versions:update-properties -DgenerateBackupPoms=false '
+alias mvnfmt='mvn com.spotify.fmt:fmt-maven-plugin:2.27:format --quiet'
+alias mvnfmt2.23='mvn com.spotify.fmt:fmt-maven-plugin:2.23:format --quiet'
+alias mvnfmt2.24='mvn com.spotify.fmt:fmt-maven-plugin:2.24:format --quiet'
+alias mvnfmt2.25='mvn com.spotify.fmt:fmt-maven-plugin:2.25:format --quiet'
+alias mvnfmt2.27='mvn com.spotify.fmt:fmt-maven-plugin:2.27:format --quiet'
 alias mvnbump='mvn versions:set -DgenerateBackupPoms=false'
 alias installgo='curl -L https://go.dev/dl/go1.18.linux-amd64.tar.gz -o - | tar xzf - -C /usr/local/'
 

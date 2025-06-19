@@ -14,17 +14,21 @@ toggle() {
   then
     xrandr --output "$1" --off
   else
-    xrandr --output "$@" --auto --scale 2
+    xrandr --output "$@" --auto # --scale 2
   fi
 }
 
 if [[ $(isOn "DP-1") -eq 1 ]]
 then
-  xrandr --output DP-1 --scale 1
-  toggle eDP-1 --pos 0x2808+0+0 #--below DP-3
+  # xrandr --output DP-1 #--scale 1
+  #xrandr --output DP-1 --mode 2560x1440 --output eDP-1 --below DP-1 --auto
+  #xrandr --output DP-1 --output eDP-1 --below DP-1 --auto
+  #xrandr --output DP-1 --mode 2560x1440
+  xrandr --output DP-1 --auto
+  toggle eDP-1 --below DP-1 #--pos 0x2808+0+0 #--below DP-3
   #toggle eDP-1 --pos 0x2160+0+0 #--below DP-3
 else
-  toggle eDP-1
+  toggle eDP-1 --below DP-1
 fi
 
 

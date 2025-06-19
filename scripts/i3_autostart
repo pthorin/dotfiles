@@ -1,7 +1,9 @@
 #!/usr/bin/env zsh
 #compton --config $HOME/.config/compton/compton.conf -b -i 0.75 &
 #transset --name i3bar &
+dbus-update-activation-environment --all &
 lxpolkit &
+/usr/bin/gnome-keyring-daemon --start --components=ssh,secrets,pkcs11 &
 #/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
 systemctl start --user TokenUpdater.service
 $HOME/.fehbg &
@@ -19,3 +21,4 @@ workrave &
 blueman-applet &
 #gnome-pomodoro &
 pasystray &
+performance &

@@ -87,8 +87,8 @@
 [core]
   autocrlf = input
   excludesFile = ~/.gitignore
-  pager = batcat
-	symlinks = false
+  ;pager = batcat
+  symlinks = false
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
