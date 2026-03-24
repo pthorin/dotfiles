@@ -150,3 +150,4 @@ alias nvim-kickstart='NVIM_APPNAME="nvim-kickstart" nvim'
 alias nvim-lsp='NVIM_APPNAME="nvim-lsp" nvim'
 
 alias kittyconfig='vim ~/.config/kitty/kitty.conf'
+alias pm='/usr/local/bin/postman'
