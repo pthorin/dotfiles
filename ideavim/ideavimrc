@@ -7,70 +7,73 @@ set commentary
 
 let mapleader = " "
 
+" Search everywhere
+map <leader>sf <Action>(SearchEverywhere)
+
 " Refactorings
-nnoremap <leader>oi :action OptimizeImports<CR>
-nnoremap <leader>rn :action RenameElement<CR>
-nnoremap <leader>rf :action RenameFile<CR>
-nnoremap <leader>ri :action Inline<CR>
-nnoremap <leader>rv :action IntroduceVariable<CR>
-nnoremap <leader>rm :action ExtractMethod<CR>
-nnoremap <leader>rr :action Refactorings.QuickListPopupAction<CR>
-nnoremap <leader>rp :action IntroduceParameter<CR>
-nnoremap <leader>im :action ImplementMethods<CR>
-nnoremap <leader>om :action OverrideMethods<CR>
+map <leader>oi <Action>(OptimizeImports)
+map <leader>rn <Action>(RenameElement)
+map <leader>rf <Action>(RenameFile)
+map <leader>ri <Action>(Inline)
+map <leader>rv <Action>(IntroduceVariable)
+map <leader>rm <Action>(ExtractMethod)
+map <leader>rr <Action>(Refactorings.QuickListPopupAction)
+map <leader>rp <Action>(IntroduceParameter)
+map <leader>im <Action>(ImplementMethods)
+map <leader>om <Action>(OverrideMethods)
 
 " Reformat Code
-nnoremap <leader>rc :action ReformatCode<CR>
+map <leader>rc <Action>(ReformatCode)
 " Quickfix
-nnoremap <leader>qf :action ShowIntentionActions<CR>
+map <leader>qf <Action>(ShowIntentionActions)
 
 " GoTo
-nnoremap gd :action GotoDeclaration<CR>
-nnoremap gr :action FindUsages<CR>
-nnoremap gi :action GotoImplementation<CR>
-nnoremap gs :action ActivateStructureToolWindow<CR>
-nnoremap <leader>gi :action GotoImplementation<CR>
-nnoremap <leader>gs :action ActivateStructureToolWindow<CR>
-nnoremap <leader>sp :action ParameterInfo<CR>
-nnoremap <leader>si :action Scala.ShowImplicitArguments<CR>
-nnoremap <leader>sd :action QuickImplementations<CR>
+map gd <Action>(GotoDeclaration)
+map gr <Action>(FindUsages)
+map gi <Action>(GotoImplementation)
+map gs <Action>(ActivateStructureToolWindow)
+map <leader>gi <Action>(GotoImplementation)
+map <leader>gs <Action>(ActivateStructureToolWindow)
+map <leader>sp <Action>(ParameterInfo)
+map <leader>si <Action>(Scala.ShowImplicitArguments)
+map <leader>sd <Action>(QuickImplementations)
 
-nnoremap <C-h> :action QuickDocumentation<CR>
+map <C-h> <Action>(QuickDocumentation)
 
 " Types
-nnoremap K :action Scala.TypeInfo<CR>
-vmap K :action Scala.TypeInfo<CR>
+""map K <Action>(Scala.TypeInfo)
+""vmap K <Action>(Scala.TypeInfo)
 
 " Search
-nnoremap <leader>fs :action GotoSymbol<CR>
-nnoremap <leader>ff :action GotoFile<CR>
-nnoremap <leader>fc :action GotoClass<CR>
-nnoremap <leader>fa :action GotoAction<CR>
-nnoremap <leader>fg :action FindInPath<CR>
-nnoremap <leader>fr :action ReplaceInPath<CR>
+map <leader>fs <Action>(GotoSymbol)
+map <leader>ff <Action>(GotoFile)
+map <leader>fc <Action>(GotoClass)
+map <leader>fa <Action>(GotoAction)
+map <leader>fg <Action>(FindInPath)
+map <leader>fr <Action>(ReplaceInPath)
 
 " Test and Run
-nnoremap <leader>gt :action GotoTest<CR>
-nnoremap <leader>tn :action RunClass<CR>
-nnoremap <leader>tl :action Rerun<CR>
-nnoremap <leader>tf :action RerunFailedTests<CR>
-nnoremap <leader>tc :action RunContextGroup<CR><CR>
+map <leader>gt <Action>(GotoTest)
+map <leader>tn <Action>(RunClass)
+map <leader>tl <Action>(Rerun)
+map <leader>tf <Action>(RerunFailedTests)
+map <leader>tc <Action>(RunContextGroup)
 
 " Undo
-nnoremap <leader>uh :action LocalHistory.ShowHistory<CR>
+map <leader>uh <Action>(LocalHistory.ShowHistory)
 
 " Jumping
 " built-in navigation to navigated items works better
-nnoremap <c-o> :action Back<cr>
-nnoremap <c-i> :action Forward<cr>
+map <c-o> <Action>(Back)
+map <c-i> <Action>(Forward)
 
 " Navigation
-nnoremap ]c :action GotoNextError<cr>
-nnoremap [c :action GotoPreviousError<cr>
-nnoremap ]d :action GotoNextError<cr>
-nnoremap [d :action GotoPreviousError<cr>
-nnoremap ]h :action VcsShowNextChangeMarker<cr>
-nnoremap [h :action VcsShowPrevChangeMarker<cr>
+map ]c <Action>(GotoNextError)
+map [c <Action>(GotoPreviousError)
+map ]d <Action>(GotoNextError)
+map [d <Action>(GotoPreviousError)
+map ]h <Action>(VcsShowNextChangeMarker)
+map [h <Action>(VcsShowPrevChangeMarker)
 
 " copy / paste
 noremap <leader>y "+y
@@ -79,7 +82,7 @@ noremap <leader>p "+p
 noremap <leader>P "+P
 
 " delete without yanking
-nnoremap <leader>d "_d
+map <leader>d "_d
 vnoremap <leader>d "_d
 
 " replace currently selected text with default register
@@ -89,3 +92,5 @@ vnoremap <leader>p "_dP"
 sethandler <C-C> n-v:ide i:vim
 sethandler <C-N> n-v:ide i:vim
 sethandler <C-P> ide
+
+map <leader>z <Action>(ToggleDistractionFreeMode)
