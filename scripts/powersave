@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 # echo 'GOVERNOR="powersave"' | sudo tee /etc/default/cpufrequtils
 # sudo service cpufrequtils restart
-powerprofilesctl set powersave
+powerprofilesctl set power-saver
+for x in /sys/devices/system/cpu/cpufreq/policy[0-9]*/scaling_governor; do echo powersave | sudo tee $x; done
