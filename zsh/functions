@@ -10,6 +10,39 @@ update_changelog_gh() {
 
 }
 
+wtfyaml() {
+  cat << EOF
+  # install yq
+  snap install yq
+  yq -p=json < input.json > output.yaml
+EOF
+}
+
+wtfdiff() {
+  cat << EOF
+  # if you want to check lines unique to one file
+  comm -13 <(sort public) <(sort requested)
+  # -1              suppress column 1 (lines unique to FILE1)
+  # -2              suppress column 2 (lines unique to FILE2)
+  # -3              suppress column 3 (lines that appear in both files)
+EOF
+}
+
+wtfcomm() {
+  wtfdiff
+}
+
+wtfocr() {
+  cat << EOF
+  # use tesseract: sudo apt update -qq && sudo apt install -y tesseract-ocr
+  tesseract image.png text
+  # that sucked, make it better! OK:
+  # install imagemagick
+  #  sudo apt install -y imagemagick -qq
+  convert image.png -resize 200% -sharpen 0x1 -contrast -normalize processed.png && tesseract processed.png text
+EOF
+}
+
 wtfredis() {
   cat << EOF
   export REDISCLI_AUTH=<password>
@@ -17,6 +50,12 @@ wtfredis() {
   SELECT <db-index>                   # 0 is default
   HLEN vehicle-metadata               # how many hash values are there in the hash?
   HGET vehicle-metadata <VIN>         # get the metadata for a VIN
+EOF
+}
+
+wtfgrpcurl() {
+  cat << EOF
+  grpcurl -plaintext -d '{ "vin": "VIN" }' service:9090 namespace.ServiceName/functionName 
 EOF
 }
 
@@ -78,6 +117,16 @@ cat << END
 
   # to pkcs
   openssl pkcs12 -export -in certificate.pem -inkey privateKey.key -out certificate.pfx
+
+  # p7b or pkcs7
+  openssl pkcs7 -in api_volvocars_com.p7b -inform DER -noout -text -print_certs 
+  # OR -inform PEM (default) PEM text, DER binary
+  
+
+  # convert pkcs7 to pkcs12
+  openssl pkcs7  -in certs.p7b -print_certs -out certs.pem          # extract cert chain
+  openssl pkcs12 -export -inkey your.key -in certs.pem -out out.pfx # builds PKCS#12
+
 END
 }
 wtfcsr() {
@@ -268,6 +317,13 @@ team-involves() {
 update_kustomize() {
   curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
 }
+update_osv_scanner() {
+  curl -L "https://github.com/google/osv-scanner/releases/latest/download/osv-scanner_linux_amd64" -o /usr/local/bin/osv-scanner
+  chmod +x /usr/local/bin/osv-scanner
+}
+osv-scan-sbom() {
+  mvn -DskipTests dependency:go-offline org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom && osv-scanner scan -L target/bom.json
+}
 update_google_java_format() {
   curl -L "https://github.com/google/google-java-format/releases/latest/download/google-java-format_linux-x86-64" -o /usr/local/bin/google-java-format
   chmod +x /usr/local/bin/google-java-format
@@ -336,6 +392,15 @@ update_go() {
   cd - || exit
 }
 
+update_nvim() {
+  pgrep nvim && echo 'Close nvim first' && return
+  echo 'Updating nvim'
+  cd ~/Downloads/
+  cp /usr/local/bin/nvim "/usr/local/bin/nvim.bak+$(date -Iseconds)"
+  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
+  chmod u+x ~/Downloads/nvim-linux-x86_64.appimage
+  cp ~/Downloads/nvim-linux-x86_64.appimage /usr/local/bin/nvim
+}
 update_sam() {
   sam --version
   cd ~/Downloads || exit
@@ -447,10 +512,10 @@ aghilite() {
 
 wtfjq() {
 cat << EOF
-cat maximum-retries-may27-july-19.json.json | jq '.result."arguments{}"|.[1]' -r |jq '.|[.eventType, .eventId, .timestamp, .vin, .data.locationId, .data.connected, .occurredAt, .linkId, .userId, .partnerAccountId, .reason] |@csv' -r
+	c a t maximum-retries-may27-july-19.json.json | jq '.result."arguments{}"|.[1]' -r |jq '.|[.eventType, .eventId, .timestamp, .vin, .data.locationId, .data.connected, .occurredAt, .linkId, .userId, .partnerAccountId, .reason] |@csv' -r
 # or define something like this in your local ~/.jq file, see https://qmacro.org/blog/posts/2022/05/19/json-object-values-into-csv-with-jq/
 def onlyvalues: [ keys[] as $k | .[$k] ];
-# it doesn't work with something like `.data.locationId` though
+# it doesn't work with something like '.data.locationId' though
 EOF
 }
 

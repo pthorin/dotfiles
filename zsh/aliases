@@ -133,7 +133,7 @@ alias mvnddu='mvn versions:display-dependency-updates -Dorg.slf4j.simpleLogger.l
 alias mvndpu='mvn versions:display-property-updates -Dorg.slf4j.simpleLogger.log.org.codehaus.mojo.versions.DisplayPropertyUpdatesMojo=info --quiet'
 alias mvnparent='mvn versions:display-parent-updates -Dorg.slf4j.simpleLogger.log.org.codehaus.mojo.versions.DisplayPropertyUpdatesMojo=info --quiet'
 alias mvnup='mvn versions:update-parent versions:update-properties -DgenerateBackupPoms=false '
-alias mvnfmt='mvn com.spotify.fmt:fmt-maven-plugin:2.27:format --quiet'
+alias mvnfmt='mvn com.spotify.fmt:fmt-maven-plugin:2.29:format --quiet'
 alias mvnfmt2.23='mvn com.spotify.fmt:fmt-maven-plugin:2.23:format --quiet'
 alias mvnfmt2.24='mvn com.spotify.fmt:fmt-maven-plugin:2.24:format --quiet'
 alias mvnfmt2.25='mvn com.spotify.fmt:fmt-maven-plugin:2.25:format --quiet'
