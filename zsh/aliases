@@ -132,7 +132,7 @@ alias cassandra="docker run -d -v "${HOME}/.cassandra:/root/.cassandra" --name c
 alias mvnddu='mvn versions:display-dependency-updates -Dorg.slf4j.simpleLogger.log.org.codehaus.mojo.versions.DisplayPropertyUpdatesMojo=info --quiet'
 alias mvndpu='mvn versions:display-property-updates -Dorg.slf4j.simpleLogger.log.org.codehaus.mojo.versions.DisplayPropertyUpdatesMojo=info --quiet'
 alias mvnparent='mvn versions:display-parent-updates -Dorg.slf4j.simpleLogger.log.org.codehaus.mojo.versions.DisplayPropertyUpdatesMojo=info --quiet'
-alias mvnup='mvn versions:update-parent versions:update-properties -DgenerateBackupPoms=false '
+alias mvnup='mvn -DgenerateBackupPoms=false -DallowMajorUpdates=false -DallowSnapshots=false -Dmaven.version.ignore=".+-(alpha|beta|rc|RC|M).+" versions:update-parent versions:update-properties'
 alias mvnfmt='mvn com.spotify.fmt:fmt-maven-plugin:2.29:format --quiet'
 alias mvnfmt2.23='mvn com.spotify.fmt:fmt-maven-plugin:2.23:format --quiet'
 alias mvnfmt2.24='mvn com.spotify.fmt:fmt-maven-plugin:2.24:format --quiet'
